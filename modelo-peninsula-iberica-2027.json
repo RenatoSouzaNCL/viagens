@@ -1,0 +1,1911 @@
+{
+ "title": "Península Ibérica 2027",
+ "headline": [
+  "Portugal",
+  "& Espanha"
+ ],
+ "summary": "24 dias pela Península Ibérica: das ladeiras do Porto às muralhas de Granada, passando por Lisboa, Sintra, a Costa Brava, Barcelona, Madri e o melhor da Andaluzia.",
+ "start": "2027-05-29",
+ "notice": "Os horários de trens, ônibus e voos vêm do planejamento original (2025) e servem de referência. Confirme cada um ao comprar os bilhetes de 2027.",
+ "stats": [
+  {
+   "value": "24",
+   "label": "dias"
+  },
+  {
+   "value": "10",
+   "label": "cidades"
+  },
+  {
+   "value": "8",
+   "label": "hospedagens"
+  },
+  {
+   "value": "2",
+   "label": "países"
+  }
+ ],
+ "trechos": [
+  {
+   "id": 1,
+   "name": "Portugal",
+   "cities": "Porto · Lisboa · Sintra",
+   "color": "#1D4E9E"
+  },
+  {
+   "id": 2,
+   "name": "Costa Brava & Barcelona",
+   "cities": "Lloret · Tossa · Barcelona",
+   "color": "#B4472F"
+  },
+  {
+   "id": 3,
+   "name": "Madri",
+   "cities": "Centro histórico · Prado · Retiro",
+   "color": "#8E1F2F"
+  },
+  {
+   "id": 4,
+   "name": "Andaluzia",
+   "cities": "Sevilha · Ronda · Granada",
+   "color": "#A64B12"
+  },
+  {
+   "id": 5,
+   "name": "Volta para casa",
+   "cities": "Madri → São Paulo",
+   "color": "#13223F"
+  }
+ ],
+ "days": [
+  {
+   "n": 1,
+   "date": "2027-05-29",
+   "trecho": 1,
+   "place": "Lisboa → Porto",
+   "mapCity": "Porto",
+   "title": "Bem-vindo a Portugal! Hoje é dia de subir até o Porto",
+   "blocks": [
+    {
+     "type": "steps",
+     "title": "Como chegar",
+     "items": [
+      {
+       "name": "Chegada ao Aeroporto de Lisboa",
+       "detail": "Já no aeroporto, compre o cartão Navegante Ocasional na estação de metrô",
+       "time": "14:35"
+      },
+      {
+       "name": "Metrô Aeroporto → Oriente",
+       "detail": "Desça na Estação Lisboa Oriente · Av. Dom João II, 1900-233"
+      },
+      {
+       "name": "Flixbus Lisboa Oriente → Porto TIC Campanhã",
+       "detail": "Chegada na Rua de Bonjóia, 691",
+       "time": "17:00 → 20:15"
+      },
+      {
+       "name": "Metrô Campanhã → Bolhão",
+       "detail": "Linhas F, A, C ou E · cerca de 18 min, trens a cada 5 min"
+      },
+      {
+       "name": "500 m a pé até o hostel",
+       "detail": "Suba pela lateral da Capela das Almas (Rua Santa Catarina) e vire na Rua Gonçalo Cristóvão"
+      }
+     ]
+    },
+    {
+     "type": "note",
+     "kind": "checkin",
+     "label": "Check-in",
+     "title": "Porto Spot Hostel · Rua Gonçalo Cristóvão, 12"
+    }
+   ]
+  },
+  {
+   "n": 2,
+   "date": "2027-05-30",
+   "trecho": 1,
+   "place": "Porto",
+   "mapCity": "Porto",
+   "title": "Azulejos, mercados e a Baixa do Porto",
+   "blocks": [
+    {
+     "type": "note",
+     "kind": "y2027",
+     "label": "Atenção · 2027",
+     "title": "Domingo: o Mercado do Bolhão está fechado",
+     "text": "Em 2027 este dia cai num domingo. Passe no Bolhão na manhã do dia 4 (terça), antes do metrô para Campanhã: ele abre às 8h e fica ao lado da estação."
+    },
+    {
+     "type": "stops",
+     "title": "Roteiro do dia",
+     "items": [
+      {
+       "name": "Capela das Almas",
+       "detail": "R. de Santa Catarina, 428"
+      },
+      {
+       "name": "Mercado do Bolhão",
+       "detail": "R. Formosa, 322"
+      },
+      {
+       "name": "Igreja de Santo Ildefonso",
+       "detail": "Praça da Batalha"
+      },
+      {
+       "name": "Estação São Bento",
+       "detail": "Av. Dom Afonso Henriques"
+      },
+      {
+       "name": "Sé do Porto",
+       "detail": "Terreiro da Sé"
+      },
+      {
+       "name": "Palácio da Bolsa",
+       "detail": "R. de Ferreira Borges, 11"
+      },
+      {
+       "name": "Rua Santa Catarina",
+       "detail": "A rua de compras mais famosa da cidade"
+      }
+     ],
+     "intro": "Roteiro a pé · 2,5 km · cerca de 35 min de caminhada"
+    },
+    {
+     "type": "places",
+     "title": "Onde comer",
+     "items": [
+      {
+       "name": "Café Almada",
+       "detail": "R. do Dr. Ricardo Jorge, 74"
+      },
+      {
+       "name": "Manteigaria · Pastéis de Nata",
+       "detail": "R. de Alexandre Braga, 24"
+      },
+      {
+       "name": "Casa Guedes Tradicional",
+       "detail": "Praça dos Poveiros, 130"
+      },
+      {
+       "name": "Gazela",
+       "detail": "Tv. do Cimo de Vila, 4"
+      }
+     ]
+    },
+    {
+     "type": "note",
+     "kind": "star",
+     "label": "Destaque",
+     "title": "Cruzeiro das 6 Pontes pelo Rio Douro"
+    },
+    {
+     "type": "places",
+     "title": "Supermercados",
+     "kind": "market",
+     "items": [
+      {
+       "name": "Pingo Doce Sá da Bandeira",
+       "detail": "500 m"
+      },
+      {
+       "name": "Continente Bom Dia Sá da Bandeira",
+       "detail": "600 m"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "n": 3,
+   "date": "2027-05-31",
+   "trecho": 1,
+   "place": "Porto · Gaia",
+   "mapCity": "Vila Nova de Gaia",
+   "title": "Ribeira, Ponte Luís I e as caves de vinho do Porto",
+   "blocks": [
+    {
+     "type": "stops",
+     "title": "Roteiro do dia",
+     "items": [
+      {
+       "name": "Cais da Ribeira",
+       "detail": "Ribeira"
+      },
+      {
+       "name": "Ponte Luís I",
+       "detail": "Travessia a pé para Gaia"
+      },
+      {
+       "name": "Miradouro da Serra do Pilar",
+       "detail": "Largo Aviz"
+      },
+      {
+       "name": "Teleférico de Gaia",
+       "detail": "Estação Cais de Gaia · Av. de Ramos Pinto, 331"
+      },
+      {
+       "name": "Mercado Beira Rio",
+       "detail": "Av. de Ramos Pinto, 148"
+      },
+      {
+       "name": "Taylor's Port",
+       "detail": "Rua do Choupelo, 250"
+      }
+     ],
+     "intro": "Roteiro a pé · 2,7 km · cerca de 42 min de caminhada"
+    },
+    {
+     "type": "places",
+     "title": "Onde comer",
+     "items": [
+      {
+       "name": "Casa Portuguesa do Pastel de Bacalhau",
+       "detail": "Av. de Diogo Leite, 122"
+      }
+     ]
+    },
+    {
+     "type": "note",
+     "kind": "night",
+     "label": "À noite",
+     "title": "Noite à beira-rio na Taberninha do Manel",
+     "text": "Av. de Diogo Leite, 308 · beira-rio em Gaia"
+    }
+   ]
+  },
+  {
+   "n": 4,
+   "date": "2027-06-01",
+   "trecho": 1,
+   "place": "Porto → Lisboa",
+   "mapCity": "Lisboa",
+   "title": "De volta a Lisboa, com tarde em Belém",
+   "blocks": [
+    {
+     "type": "steps",
+     "title": "Como chegar",
+     "items": [
+      {
+       "name": "Metrô Bolhão → Campanhã",
+       "detail": "Linhas F, A, C ou E, sentido Estação Porto TIC Campanhã"
+      },
+      {
+       "name": "Flixbus Porto Campanhã → Lisboa Oriente",
+       "detail": "Embarque na Rua de Bonjóia, 691",
+       "time": "10:00 → 13:15"
+      },
+      {
+       "name": "Metrô Oriente → São Sebastião",
+       "detail": "Cerca de 30 min, trens a cada 7 min"
+      },
+      {
+       "name": "900 m a pé até o hostel",
+       "detail": "Siga pela Av. António Augusto de Aguiar"
+      }
+     ]
+    },
+    {
+     "type": "note",
+     "kind": "checkin",
+     "label": "Check-in",
+     "title": "Lisbon Top Hostel · Av. António Augusto de Aguiar, 30, Ap. 1D"
+    },
+    {
+     "type": "steps",
+     "title": "Almoço e ida para Belém",
+     "items": [
+      {
+       "name": "Restaurante O Rialva",
+       "detail": "Av. Duque de Ávila, 2B · 1,4 km do hostel"
+      },
+      {
+       "name": "Carris 723 (Algés)",
+       "detail": "Ande 550 m até a parada Mq. Pombal – Av. Duque de Loulé, desça em Lg. Princesa e siga 500 m a pé até a Torre"
+      }
+     ]
+    },
+    {
+     "type": "stops",
+     "title": "Roteiro do dia",
+     "items": [
+      {
+       "name": "Torre de Belém",
+       "detail": "Av. Brasília"
+      },
+      {
+       "name": "Padrão dos Descobrimentos",
+       "detail": "Av. Brasília"
+      },
+      {
+       "name": "Mosteiro dos Jerónimos",
+       "detail": "Praça do Império"
+      },
+      {
+       "name": "Pastéis de Belém",
+       "detail": "R. de Belém, 84–92"
+      }
+     ],
+     "intro": "Em Belém · 1,7 km · cerca de 25 min de caminhada"
+    },
+    {
+     "type": "note",
+     "kind": "transport",
+     "title": "Volta: Carris 727 (Estação Roma-Areeiro)",
+     "text": "Embarque na parada Mosteiro Jerónimos e caminhe 300 m até o hostel"
+    },
+    {
+     "type": "places",
+     "title": "Supermercados",
+     "kind": "market",
+     "items": [
+      {
+       "name": "Pingo Doce Tomás Ribeiro",
+       "detail": "400 m"
+      },
+      {
+       "name": "Continente Bom Dia Duque de Loulé",
+       "detail": "700 m"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "n": 5,
+   "date": "2027-06-02",
+   "trecho": 1,
+   "place": "Lisboa",
+   "mapCity": "Lisboa",
+   "title": "Lisboa de miradouro em miradouro: Baixa, Alfama e Chiado",
+   "blocks": [
+    {
+     "type": "places",
+     "title": "Café da manhã",
+     "items": [
+      {
+       "name": "Rosa Doce Café",
+       "detail": "R. de Santa Marta, 60A · 1 km do hostel"
+      },
+      {
+       "name": "Balcão do Marquês",
+       "detail": "Av. Duque de Loulé, 113–119 · 600 m do hostel"
+      }
+     ]
+    },
+    {
+     "type": "note",
+     "kind": "transport",
+     "title": "Metrô Parque → Restauradores",
+     "text": "Sentido Santa Apolónia · depois 120 m a pé até o Elevador da Glória"
+    },
+    {
+     "type": "stops",
+     "title": "Roteiro do dia",
+     "items": [
+      {
+       "name": "Elevador da Glória",
+       "detail": "Calçada da Glória, 51"
+      },
+      {
+       "name": "Casa do Alentejo",
+       "detail": "R. das Portas de Santo Antão, 58"
+      },
+      {
+       "name": "O Mundo Fantástico da Sardinha Portuguesa",
+       "detail": "Praça Dom Pedro IV, 39"
+      },
+      {
+       "name": "Castelo de São Jorge",
+       "detail": "R. de Santa Cruz do Castelo"
+      },
+      {
+       "name": "Miradouro de Santa Luzia",
+       "detail": "Largo de Santa Luzia"
+      },
+      {
+       "name": "Igreja de Santo António",
+       "detail": "Largo Santo António da Sé"
+      },
+      {
+       "name": "Praça do Comércio",
+       "detail": "Baixa"
+      },
+      {
+       "name": "Time Out Market Lisboa",
+       "detail": "Mercado da Ribeira · Av. 24 de Julho"
+      },
+      {
+       "name": "Miradouro de Santa Catarina",
+       "detail": "Pôr do sol sobre o Tejo"
+      }
+     ],
+     "intro": "Roteiro a pé · 4,5 km · cerca de 1h06 de caminhada (com subidas)"
+    },
+    {
+     "type": "places",
+     "title": "Onde comer",
+     "items": [
+      {
+       "name": "O Trevo",
+       "detail": "Praça Luís de Camões, 48"
+      },
+      {
+       "name": "Água no Bico",
+       "detail": "R. das Gaivotas, 8"
+      }
+     ]
+    },
+    {
+     "type": "note",
+     "kind": "transport",
+     "title": "Volta: metrô Baixa-Chiado → Parque",
+     "text": "Sentido Reboleira · depois 140 m a pé até o hostel"
+    }
+   ]
+  },
+  {
+   "n": 6,
+   "date": "2027-06-03",
+   "trecho": 1,
+   "place": "Bate-volta · Sintra",
+   "mapCity": "Sintra",
+   "title": "Sintra: palácios de conto de fadas entre as montanhas",
+   "blocks": [
+    {
+     "type": "steps",
+     "title": "Como chegar",
+     "items": [
+      {
+       "name": "Metrô Parque → Restauradores",
+       "detail": "Sentido Santa Apolónia · depois 190 m a pé até a Estação do Rossio (R. 1º de Dezembro, 133)"
+      },
+      {
+       "name": "Comboio Rossio → Sintra",
+       "detail": "Trem nº 18885"
+      },
+      {
+       "name": "Ônibus 434 · Circuito Pena",
+       "detail": "Desça na parada do Palácio da Pena; depois siga a pé até o Castelo dos Mouros"
+      }
+     ]
+    },
+    {
+     "type": "stops",
+     "title": "Roteiro do dia",
+     "items": [
+      {
+       "name": "Palácio Nacional da Pena",
+       "detail": "Estrada da Pena"
+      },
+      {
+       "name": "Castelo dos Mouros",
+       "detail": "A pé a partir da Pena"
+      },
+      {
+       "name": "Centro histórico de Sintra",
+       "detail": "Ruelas, lojinhas e doces locais"
+      },
+      {
+       "name": "Palácio Nacional de Sintra",
+       "detail": "Largo Rainha Dona Amélia"
+      }
+     ]
+    },
+    {
+     "type": "places",
+     "title": "Onde comer",
+     "items": [
+      {
+       "name": "Tascantiga",
+       "detail": "Escadinhas da Fonte da Pipa, 2"
+      },
+      {
+       "name": "Casa Piriquita",
+       "detail": "R. Padarias, 1 · prove os travesseiros"
+      }
+     ]
+    },
+    {
+     "type": "note",
+     "kind": "transport",
+     "title": "Volta à estação de Sintra",
+     "text": "Ônibus circular ou 600 m a pé · depois comboio até o Rossio"
+    }
+   ]
+  },
+  {
+   "n": 7,
+   "date": "2027-06-04",
+   "trecho": 2,
+   "place": "Lisboa → Lloret",
+   "mapCity": "Lloret de Mar",
+   "title": "Grande travessia: Lisboa, Madri, Barcelona e a Costa Brava",
+   "blocks": [
+    {
+     "type": "note",
+     "kind": "alert",
+     "title": "Dia longo, com 4 conexões",
+     "text": "Leve lanches e água, e mantenha os bilhetes à mão. A chegada em Lloret é por volta da meia-noite."
+    },
+    {
+     "type": "note",
+     "kind": "y2027",
+     "label": "Atenção · 2027",
+     "title": "Madri na véspera da final da Champions",
+     "text": "A final de 2027 está prevista para 05/06 no Metropolitano. Voo, ônibus do aeroporto e trens podem estar cheios e mais caros: compre tudo com antecedência."
+    },
+    {
+     "type": "steps",
+     "title": "Como chegar",
+     "items": [
+      {
+       "name": "Ônibus 783 (Prior Velho) até o Aeroporto de Lisboa",
+       "detail": "Embarque na Av. Fontes Pereira de Melo · 400 m a pé até o terminal"
+      },
+      {
+       "name": "Voo Lisboa → Madri",
+       "detail": "Aeroporto Adolfo Suárez Madrid-Barajas",
+       "time": "13:00 → 15:20"
+      },
+      {
+       "name": "Ônibus 203 Exprés Aeropuerto → Atocha",
+       "detail": "Pague com o cartão Wise por aproximação · Madrid Puerta de Atocha-Almudena Grandes"
+      },
+      {
+       "name": "Trem OUIGO Madri Atocha → Barcelona Sants",
+       "detail": "Alta velocidade, cerca de 2h40",
+       "time": "17:17 → 19:54"
+      },
+      {
+       "name": "Metrô L1 Sants → Arc de Triomf",
+       "detail": "Compre o T-Casual na estação · caminhe até a Estación del Nord (Carrer de Nàpols, 68)"
+      },
+      {
+       "name": "Moventis/Sarfa linha 2 → Lloret de Mar Estació",
+       "detail": "Sentido Tossa de Mar / Lloret de Mar",
+       "time": "Saída 22:00"
+      },
+      {
+       "name": "550 m a pé até o hostel · 8 min",
+       "detail": "Av. Vila de Blanes → 2ª à direita na Carrer de Vicenç Bou → 3ª à esquerda na Carrer del Torrentó → 2ª à direita na Carrer de Josep Lluhí"
+      }
+     ]
+    },
+    {
+     "type": "note",
+     "kind": "checkin",
+     "label": "Check-in",
+     "title": "Loft Hostal · Carrer de Josep Lluhí, 11"
+    }
+   ]
+  },
+  {
+   "n": 8,
+   "date": "2027-06-05",
+   "trecho": 2,
+   "place": "Lloret de Mar",
+   "mapCity": "Lloret de Mar",
+   "title": "Dia de praia, enseadas e castelo à beira-mar",
+   "blocks": [
+    {
+     "type": "stops",
+     "title": "Roteiro do dia",
+     "items": [
+      {
+       "name": "Església de Sant Romà",
+       "detail": "Plaça de l'Església, 4"
+      },
+      {
+       "name": "Platja de Lloret de Mar",
+       "detail": "A praia principal da cidade"
+      },
+      {
+       "name": "Cala Sa Caleta",
+       "detail": "Enseada no fim da orla"
+      },
+      {
+       "name": "Castell de Lloret",
+       "detail": "Carrer Costa d'en Josep Macià, 5"
+      }
+     ],
+     "intro": "Roteiro a pé pela orla · 1,9 km · cerca de 26 min"
+    },
+    {
+     "type": "places",
+     "title": "Onde comer",
+     "items": [
+      {
+       "name": "La Terrassa del Bella",
+       "detail": "Plaça Espanya, 5"
+      },
+      {
+       "name": "La Brava Street Food",
+       "detail": "Carrer Sant Romà, 7"
+      }
+     ]
+    },
+    {
+     "type": "places",
+     "title": "Supermercado",
+     "kind": "market",
+     "items": [
+      {
+       "name": "Carrefour Express",
+       "detail": "Carrer de la Sénia del Barral, 49 · 450 m"
+      }
+     ]
+    },
+    {
+     "type": "note",
+     "kind": "night",
+     "label": "À noite",
+     "title": "Final da Champions League 2027",
+     "text": "Prevista para hoje, em Madri: escolha um bar em Lloret para assistir"
+    }
+   ]
+  },
+  {
+   "n": 9,
+   "date": "2027-06-06",
+   "trecho": 2,
+   "place": "Tossa de Mar",
+   "mapCity": "Tossa de Mar",
+   "title": "Tossa de Mar e sua vila medieval murada",
+   "blocks": [
+    {
+     "type": "note",
+     "kind": "y2027",
+     "label": "Atenção · 2027",
+     "title": "Domingo: ônibus com horário reduzido",
+     "text": "Confira a tabela de domingos e feriados das linhas Lloret ⇄ Tossa, inclusive o último ônibus de volta."
+    },
+    {
+     "type": "steps",
+     "title": "Como chegar",
+     "items": [
+      {
+       "name": "Ônibus L69 ou L9 (LLO-TOS) → Tossa",
+       "detail": "Embarque no Terminal Bus Lloret, a 500 m do hostel"
+      },
+      {
+       "name": "Do Terminal Bus Tossa até a praia",
+       "detail": "1,2 km a pé · cerca de 18 min"
+      }
+     ]
+    },
+    {
+     "type": "stops",
+     "title": "Roteiro do dia",
+     "items": [
+      {
+       "name": "Platja Gran",
+       "detail": "17320 Tossa de Mar"
+      },
+      {
+       "name": "Muralles de la Vila Vella",
+       "detail": "A cidadela medieval sobre o mar"
+      }
+     ]
+    },
+    {
+     "type": "note",
+     "kind": "transport",
+     "title": "Volta: mesmo ônibus até Lloret",
+     "text": "Linhas L69 ou L9 no Terminal Bus Tossa"
+    }
+   ]
+  },
+  {
+   "n": 10,
+   "date": "2027-06-07",
+   "trecho": 2,
+   "place": "Lloret de Mar",
+   "mapCity": "Lloret de Mar",
+   "title": "Mirante do Castell de Sant Joan e tarde em Fenals",
+   "blocks": [
+    {
+     "type": "stops",
+     "title": "Roteiro do dia",
+     "items": [
+      {
+       "name": "Castell de Sant Joan",
+       "detail": "Camí Castell de Sant Joan, s/n"
+      },
+      {
+       "name": "Platja de Fenals",
+       "detail": "17310 Lloret de Mar"
+      }
+     ],
+     "intro": "Roteiro a pé · 3 km · cerca de 44 min"
+    },
+    {
+     "type": "places",
+     "title": "Onde comer",
+     "items": [
+      {
+       "name": "Pizzaria do Marcelo",
+       "detail": "Carrer de Riu de la Plata, 31"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "n": 11,
+   "date": "2027-06-08",
+   "trecho": 2,
+   "place": "Lloret → Barcelona",
+   "mapCity": "Barcelona",
+   "title": "Rumo a Barcelona, com casa no Passeig de Gràcia",
+   "blocks": [
+    {
+     "type": "steps",
+     "title": "Como chegar",
+     "items": [
+      {
+       "name": "Moventis/Sarfa linha 2 → Barcelona Estació del Nord",
+       "detail": "Embarque em Lloret de Mar Estació",
+       "time": "A definir",
+       "pending": true
+      },
+      {
+       "name": "A pé até o ponto Pg. Lluís Companys – Almogàvers",
+       "detail": "Ao lado do Arc de Triomf"
+      },
+      {
+       "name": "Ônibus V17 (Vall d'Hebron) ou V15",
+       "detail": "Desça na parada Còrsega – Pg. de Gràcia · cerca de 25 min"
+      },
+      {
+       "name": "120 m a pé até o hostel",
+       "detail": "Siga pela Carrer de Còrsega e vire à direita no Pg. de Gràcia"
+      }
+     ]
+    },
+    {
+     "type": "note",
+     "kind": "checkin",
+     "label": "Check-in",
+     "title": "Hostel Casa Gràcia · Pg. de Gràcia, 116 Bis"
+    }
+   ]
+  },
+  {
+   "n": 12,
+   "date": "2027-06-09",
+   "trecho": 2,
+   "place": "Barcelona",
+   "mapCity": "Barcelona",
+   "title": "A Barcelona de Gaudí, do Eixample à Sagrada Família",
+   "blocks": [
+    {
+     "type": "stops",
+     "title": "Roteiro do dia",
+     "items": [
+      {
+       "name": "Casa Milà · La Pedrera",
+       "detail": "Pg. de Gràcia, 92"
+      },
+      {
+       "name": "Casa Batlló",
+       "detail": "Pg. de Gràcia, 43"
+      },
+      {
+       "name": "Basílica da Sagrada Família",
+       "detail": "Carrer de Mallorca, 401"
+      }
+     ]
+    },
+    {
+     "type": "places",
+     "title": "Onde comer",
+     "items": [
+      {
+       "name": "Pasta Lucia",
+       "detail": "Carrer del Rosselló, 433"
+      },
+      {
+       "name": "The Quick Greek",
+       "detail": "Carrer d'Astúries, 67 · Gràcia"
+      },
+      {
+       "name": "Choripa",
+       "detail": "Travessera de Gràcia, 202"
+      },
+      {
+       "name": "Empanades La Panada",
+       "detail": "Av. de Gaudí, 72"
+      }
+     ]
+    },
+    {
+     "type": "places",
+     "title": "Supermercado",
+     "kind": "market",
+     "items": [
+      {
+       "name": "Mercadona",
+       "detail": "Carrer del Consell de Cent, 366 · 1,2 km"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "n": 13,
+   "date": "2027-06-10",
+   "trecho": 2,
+   "place": "Barcelona",
+   "mapCity": "Barcelona",
+   "title": "Park Güell: mosaicos e vista para a cidade inteira",
+   "blocks": [
+    {
+     "type": "steps",
+     "title": "Como chegar",
+     "items": [
+      {
+       "name": "Ônibus 24 (El Carmel)",
+       "detail": "Da parada Pg. de Gràcia – Diagonal até CN Catalunya – Park Güell · cerca de 26 min"
+      }
+     ]
+    },
+    {
+     "type": "stops",
+     "title": "Roteiro do dia",
+     "items": [
+      {
+       "name": "Park Güell",
+       "detail": "Gràcia, 08024 Barcelona"
+      }
+     ]
+    },
+    {
+     "type": "note",
+     "kind": "tip",
+     "label": "Dica",
+     "title": "A área monumental tem entrada com horário marcado: reserve antes",
+     "text": "Dia mais leve, aproveite para explorar o bairro de Gràcia na volta"
+    }
+   ]
+  },
+  {
+   "n": 14,
+   "date": "2027-06-11",
+   "trecho": 2,
+   "place": "Barcelona",
+   "mapCity": "Barcelona",
+   "title": "Da Barceloneta ao Gótico, terminando na Rambla",
+   "blocks": [
+    {
+     "type": "steps",
+     "title": "Como chegar",
+     "items": [
+      {
+       "name": "Ônibus 47 (Pg. Marítim)",
+       "detail": "Embarque em Pau Claris – Mallorca (600 m do hostel) e desça em Pg. Marítim – Pepe Rubianes"
+      }
+     ]
+    },
+    {
+     "type": "stops",
+     "title": "Roteiro do dia",
+     "items": [
+      {
+       "name": "La Barceloneta",
+       "detail": "Bairro e praia"
+      },
+      {
+       "name": "Mercat de La Boqueria",
+       "detail": "La Rambla, 91"
+      },
+      {
+       "name": "Barri Gòtic",
+       "detail": "Carrer del Paradís, 6"
+      },
+      {
+       "name": "Catedral de Barcelona",
+       "detail": "Pla de la Seu, s/n"
+      },
+      {
+       "name": "Parc de la Ciutadella",
+       "detail": "Ciutat Vella"
+      },
+      {
+       "name": "Arc de Triomf",
+       "detail": "Passeig de Lluís Companys"
+      },
+      {
+       "name": "La Rambla",
+       "detail": "O passeio mais famoso da cidade"
+      }
+     ]
+    },
+    {
+     "type": "places",
+     "title": "Onde comer",
+     "items": [
+      {
+       "name": "Da Nanni Pizzeria",
+       "detail": "Carrer de la Llibreteria, 10"
+      },
+      {
+       "name": "The Pan's Club",
+       "detail": "Plaça de la Llana, 16"
+      },
+      {
+       "name": "Bismillah Kebabish",
+       "detail": "Carrer de Joaquín Costa, 22"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "n": 15,
+   "date": "2027-06-12",
+   "trecho": 3,
+   "place": "Barcelona → Madri",
+   "mapCity": "Madrid",
+   "title": "Trem-bala até Madri e tarde no centro histórico",
+   "blocks": [
+    {
+     "type": "steps",
+     "title": "Como chegar",
+     "items": [
+      {
+       "name": "Metrô L5 Diagonal → Sants Estació",
+       "detail": "Cerca de 4 min, trens a cada 5 min"
+      },
+      {
+       "name": "Trem AVLO Barcelona Sants → Madri Atocha",
+       "detail": "Alta velocidade",
+       "time": "09:55 → 13:19"
+      },
+      {
+       "name": "Metrô Linha 1 (azul-clara) Atocha → Tirso de Molina",
+       "detail": "Sentido Pinar de Chamartín"
+      },
+      {
+       "name": "400 m a pé até o hostel",
+       "detail": "Saia por Conde de Romanones → oeste até a Pl. de Tirso de Molina → à esquerda na praça → suave à esquerda na C. del Mesón de Paredes → à direita na C. de Juanelo"
+      }
+     ]
+    },
+    {
+     "type": "note",
+     "kind": "checkin",
+     "label": "Check-in",
+     "title": "Ok Hostel Madrid · C. de Juanelo, 24"
+    },
+    {
+     "type": "stops",
+     "title": "Roteiro do dia",
+     "items": [
+      {
+       "name": "Plaza Mayor",
+       "detail": "Centro"
+      },
+      {
+       "name": "Mercado de San Miguel",
+       "detail": "Pl. de San Miguel, s/n"
+      },
+      {
+       "name": "Catedral de la Almudena",
+       "detail": "C. de Bailén, 10"
+      },
+      {
+       "name": "Palacio Real de Madrid",
+       "detail": "Centro"
+      },
+      {
+       "name": "Plaza de España",
+       "detail": "Centro"
+      },
+      {
+       "name": "Templo de Debod",
+       "detail": "C. de Ferraz, 1 · ótimo para o pôr do sol"
+      }
+     ],
+     "intro": "Roteiro a pé · 2,6 km · cerca de 36 min"
+    },
+    {
+     "type": "places",
+     "title": "Onde comer e extras",
+     "items": [
+      {
+       "name": "Pez Tortilla",
+       "detail": "C. del Pez, 36"
+      },
+      {
+       "name": "La Ardosa",
+       "detail": "C. de Colón, 13"
+      },
+      {
+       "name": "Mercado de San Ildefonso",
+       "detail": "C. de Fuencarral, 57"
+      },
+      {
+       "name": "Iglesia de San Antonio de los Alemanes",
+       "detail": "C. de la Puebla, 22"
+      }
+     ]
+    },
+    {
+     "type": "places",
+     "title": "Supermercado",
+     "kind": "market",
+     "items": [
+      {
+       "name": "Dia",
+       "detail": "C. de Atocha, 22 · 600 m"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "n": 16,
+   "date": "2027-06-13",
+   "trecho": 3,
+   "place": "Madri",
+   "mapCity": "Madrid",
+   "title": "Puerta del Sol, Gran Vía, Prado e o Retiro",
+   "blocks": [
+    {
+     "type": "stops",
+     "title": "Roteiro do dia",
+     "items": [
+      {
+       "name": "Puerta del Sol",
+       "detail": "Centro"
+      },
+      {
+       "name": "Gran Vía",
+       "detail": "Centro"
+      },
+      {
+       "name": "Museo del Prado",
+       "detail": "Retiro"
+      },
+      {
+       "name": "Parque del Retiro",
+       "detail": "Retiro"
+      },
+      {
+       "name": "Puerta de Alcalá",
+       "detail": "Pl. de la Independencia, s/n"
+      },
+      {
+       "name": "Palacio de Cibeles",
+       "detail": "Plaza de Cibeles, 1"
+      }
+     ],
+     "intro": "Roteiro a pé · 3,7 km · cerca de 52 min"
+    },
+    {
+     "type": "places",
+     "title": "Onde comer",
+     "items": [
+      {
+       "name": "La Dolores",
+       "detail": "Pl. de Jesús, 4"
+      }
+     ]
+    },
+    {
+     "type": "note",
+     "kind": "tip",
+     "label": "Dica",
+     "title": "Prado aos domingos: entrada gratuita das 17h às 19h",
+     "text": "A fila é grande; se preferir garantir, compre o ingresso com horário."
+    }
+   ]
+  },
+  {
+   "n": 17,
+   "date": "2027-06-14",
+   "trecho": 4,
+   "place": "Madri → Sevilha",
+   "mapCity": "Sevilla",
+   "title": "Chegada a Sevilha e tarde em Triana, às margens do Guadalquivir",
+   "blocks": [
+    {
+     "type": "steps",
+     "title": "Como chegar",
+     "items": [
+      {
+       "name": "Metrô Linha 1 Tirso de Molina → Atocha",
+       "detail": "Sentido Valdecarros"
+      },
+      {
+       "name": "Trem IRYO Madri Atocha → Sevilha Santa Justa",
+       "detail": "Alta velocidade",
+       "time": "08:55 → 11:37"
+      },
+      {
+       "name": "Ônibus EA (Plaza de Armas)",
+       "detail": "Embarque no ponto Auxiliar Kansas City (Est. Santa Justa) e desça em Marqués de Paradas"
+      },
+      {
+       "name": "450 m a pé até o hostel · 7 min",
+       "detail": "Norte pela C. Marqués de Paradas → direita na C. Albuera → direita na C. Julio César → esquerda na C. Puerta de Triana → direita na C. Zaragoza → direita na C. Doña Guiomar → esquerda na Padre Marchena"
+      }
+     ]
+    },
+    {
+     "type": "note",
+     "kind": "checkin",
+     "label": "Check-in",
+     "title": "Sweet Sevilla Hostel · C. Padre Marchena, 17"
+    },
+    {
+     "type": "stops",
+     "title": "Roteiro do dia",
+     "items": [
+      {
+       "name": "Plaza de Toros de la Maestranza",
+       "detail": "P.º de Cristóbal Colón, 12"
+      },
+      {
+       "name": "Mercado de Triana",
+       "detail": "C. San Jorge, 6"
+      },
+      {
+       "name": "Soul Garden",
+       "detail": "Triana, à beira do rio"
+      },
+      {
+       "name": "Parque Bajos de Triana",
+       "detail": "C. Jandalo"
+      },
+      {
+       "name": "Setas de Sevilla",
+       "detail": "Pl. de la Encarnación, s/n"
+      }
+     ],
+     "intro": "Roteiro a pé · 4 km · cerca de 56 min"
+    },
+    {
+     "type": "places",
+     "title": "Onde comer",
+     "items": [
+      {
+       "name": "Bodeguita Romero",
+       "detail": "C. Harinas, 10"
+      },
+      {
+       "name": "El Rinconcillo",
+       "detail": "C. Gerona, 40"
+      },
+      {
+       "name": "Mercado de Feria",
+       "detail": "C. Feria, s/n · Puesto 27"
+      }
+     ]
+    },
+    {
+     "type": "places",
+     "title": "Supermercado",
+     "kind": "market",
+     "items": [
+      {
+       "name": "Carrefour Express",
+       "detail": "C. Zaragoza, 31 · 120 m"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "n": 18,
+   "date": "2027-06-15",
+   "trecho": 4,
+   "place": "Sevilha",
+   "mapCity": "Sevilla",
+   "title": "Catedral, Real Alcázar e as ruelas de Santa Cruz",
+   "blocks": [
+    {
+     "type": "stops",
+     "title": "Roteiro do dia",
+     "items": [
+      {
+       "name": "Catedral de Sevilla",
+       "detail": "Av. de la Constitución, s/n"
+      },
+      {
+       "name": "Archivo General de Indias",
+       "detail": "Av. de la Constitución, s/n"
+      },
+      {
+       "name": "Torre del Oro",
+       "detail": "P.º de Cristóbal Colón, s/n"
+      },
+      {
+       "name": "Fuente de Híspalis",
+       "detail": "Puerta de Jerez, 4"
+      },
+      {
+       "name": "Real Alcázar de Sevilla",
+       "detail": "Casco Antiguo"
+      },
+      {
+       "name": "Bairro de Santa Cruz",
+       "detail": "O antigo bairro judeu"
+      }
+     ],
+     "intro": "Roteiro a pé · 2,4 km · cerca de 33 min"
+    },
+    {
+     "type": "places",
+     "title": "Onde comer",
+     "items": [
+      {
+       "name": "La Sacristía Tapas",
+       "detail": "C. Mateos Gago, 18"
+      },
+      {
+       "name": "Bodega Santa Cruz Las Columnas",
+       "detail": "C. Rodrigo Caro, 1"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "n": 19,
+   "date": "2027-06-16",
+   "trecho": 4,
+   "place": "Bate-volta · Ronda",
+   "mapCity": "Ronda",
+   "title": "Ronda, a cidade suspensa sobre o desfiladeiro",
+   "blocks": [
+    {
+     "type": "steps",
+     "title": "Como chegar",
+     "items": [
+      {
+       "name": "Ônibus Sevilha → Ronda",
+       "detail": "Desembarque na Estación de Autobuses de Ronda · a definir",
+       "time": "A definir",
+       "pending": true
+      }
+     ]
+    },
+    {
+     "type": "stops",
+     "title": "Roteiro do dia",
+     "items": [
+      {
+       "name": "Alameda del Tajo",
+       "detail": "C. Virgen de la Paz"
+      },
+      {
+       "name": "Paseo de los Ingleses",
+       "detail": "Ronda"
+      },
+      {
+       "name": "Mirador de Ronda",
+       "detail": "Ctra. de los Molinos"
+      },
+      {
+       "name": "Plaza de Toros de Ronda",
+       "detail": "C. Virgen de la Paz, 15"
+      },
+      {
+       "name": "Puente Nuevo",
+       "detail": "Centro de Interpretación · Pl. España, s/n"
+      },
+      {
+       "name": "Mirador de Aldehuela",
+       "detail": "C. Armiñán, 1"
+      },
+      {
+       "name": "Jardines de Cuenca",
+       "detail": "C. Escolleras, 1"
+      },
+      {
+       "name": "Calle Real",
+       "detail": "C. Real, 8"
+      },
+      {
+       "name": "Puerta de Almocábar",
+       "detail": "Pl. Ruedo Alameda"
+      }
+     ],
+     "intro": "Roteiro a pé · 2,9 km · cerca de 48 min"
+    },
+    {
+     "type": "places",
+     "title": "Onde comer",
+     "items": [
+      {
+       "name": "Bodega San Francisco",
+       "detail": "C. Comandante Salvador Carrasco, esq. Pje. del Cante, 1"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "n": 20,
+   "date": "2027-06-17",
+   "trecho": 4,
+   "place": "Sevilha",
+   "mapCity": "Sevilla",
+   "title": "Dia tranquilo na Plaza de España e no Parque de María Luisa",
+   "blocks": [
+    {
+     "type": "stops",
+     "title": "Roteiro do dia",
+     "items": [
+      {
+       "name": "Plaza de España",
+       "detail": "41013 Sevilla"
+      },
+      {
+       "name": "Parque de María Luisa",
+       "detail": "41013 Sevilla"
+      }
+     ],
+     "intro": "A pé desde o hostel, passando pela Catedral e pela Puerta de Jerez"
+    }
+   ]
+  },
+  {
+   "n": 21,
+   "date": "2027-06-18",
+   "trecho": 4,
+   "place": "Sevilha → Granada",
+   "mapCity": "Granada",
+   "title": "Rumo a Granada e entardecer no Albaicín",
+   "blocks": [
+    {
+     "type": "steps",
+     "title": "Como chegar",
+     "items": [
+      {
+       "name": "750 m a pé até a Estación Plaza de Armas",
+       "detail": "Puente del Cristo de la Expiración, 2"
+      },
+      {
+       "name": "Ônibus ALSA Sevilha → Granada",
+       "detail": "Chegada à Estación de Autobuses de Granada",
+       "time": "09:00 → 12:00"
+      },
+      {
+       "name": "Ônibus 33",
+       "detail": "De Juan Pablo II – Estación Autobuses até Acera del Darro 30 – Fuente de las Batallas"
+      },
+      {
+       "name": "400 m a pé até o hostel · 6 min",
+       "detail": "Noroeste pela C. Acera del Darro → esquerda na C. Recogidas → direita na C. Puentezuelas → esquerda na C. Ángel"
+      }
+     ]
+    },
+    {
+     "type": "note",
+     "kind": "checkin",
+     "label": "Check-in",
+     "title": "Granada Old Town Hostel · C. Ángel, 8"
+    },
+    {
+     "type": "stops",
+     "title": "Roteiro do dia",
+     "items": [
+      {
+       "name": "Alcaicería",
+       "detail": "C. Alcaicería · antigo mercado árabe"
+      },
+      {
+       "name": "Plaza de Bib-Rambla",
+       "detail": "Centro"
+      },
+      {
+       "name": "Catedral de Granada",
+       "detail": "Pl. de las Pasiegas, s/n"
+      },
+      {
+       "name": "Plaza Nueva",
+       "detail": "Centro"
+      },
+      {
+       "name": "Carrera del Darro",
+       "detail": "Albaicín"
+      },
+      {
+       "name": "Paseo de los Tristes",
+       "detail": "Albaicín · vista para a Alhambra"
+      },
+      {
+       "name": "Carmen de la Victoria",
+       "detail": "Cta. del Chapiz, 9"
+      }
+     ],
+     "intro": "Roteiro a pé · 2,2 km · cerca de 33 min"
+    },
+    {
+     "type": "places",
+     "title": "Onde comer",
+     "items": [
+      {
+       "name": "Bar La Riviera",
+       "detail": "C. Cetti Meriem, 7"
+      }
+     ]
+    },
+    {
+     "type": "places",
+     "title": "Supermercado",
+     "kind": "market",
+     "items": [
+      {
+       "name": "Carrefour Express",
+       "detail": "C. Nueva de San Antón, 16 · 350 m"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "n": 22,
+   "date": "2027-06-19",
+   "trecho": 4,
+   "place": "Granada",
+   "mapCity": "Granada",
+   "title": "Alhambra: o grande palácio mouro da Península",
+   "blocks": [
+    {
+     "type": "note",
+     "kind": "y2027",
+     "label": "Atenção · 2027",
+     "title": "Sábado é o dia mais disputado da Alhambra",
+     "text": "Compre o ingresso assim que a venda abrir para a data."
+    },
+    {
+     "type": "steps",
+     "title": "Como chegar",
+     "items": [
+      {
+       "name": "650 m a pé até a parada Plaza Isabel la Católica, 4",
+       "detail": "Pelo centro, passando perto da Catedral"
+      },
+      {
+       "name": "Ônibus C30 Alhambra",
+       "detail": "Até a parada Alhambra – Generalife · cerca de 20 min, a cada 8 min"
+      }
+     ]
+    },
+    {
+     "type": "stops",
+     "title": "Roteiro do dia",
+     "items": [
+      {
+       "name": "Alhambra",
+       "detail": "Palácios Nazaríes, Alcazaba e Generalife"
+      }
+     ]
+    },
+    {
+     "type": "note",
+     "kind": "alert",
+     "label": "Importante",
+     "title": "Os Palácios Nazaríes têm horário de entrada fixo no ingresso",
+     "text": "Chegue com antecedência e leve documento de identidade"
+    }
+   ]
+  },
+  {
+   "n": 23,
+   "date": "2027-06-20",
+   "trecho": 5,
+   "place": "Granada → Madri",
+   "mapCity": "Madrid",
+   "title": "Última noite em Madri, no charmoso bairro de Lavapiés",
+   "blocks": [
+    {
+     "type": "note",
+     "kind": "y2027",
+     "label": "Atenção · 2027",
+     "title": "Domingo: confira o horário da ALSA",
+     "text": "O horário 08:00 → 13:00 é de referência; aos domingos a grade pode mudar."
+    },
+    {
+     "type": "steps",
+     "title": "Como chegar",
+     "items": [
+      {
+       "name": "Ônibus 33 até a rodoviária de Granada",
+       "detail": "Ande 500 m até Acera del Darro 1 – Fuente de las Batallas e desça em Juan Pablo II – Estación Autobuses"
+      },
+      {
+       "name": "Ônibus ALSA Granada → Madri Estación Sur",
+       "detail": "Méndez Álvaro",
+       "time": "08:00 → 13:00"
+      },
+      {
+       "name": "Ônibus 352",
+       "detail": "De Estación Sur – Méndez Álvaro até Ronda Atocha – Estación de Autobuses · cerca de 19 min"
+      },
+      {
+       "name": "Curta caminhada até o hostel",
+       "detail": "a definir",
+       "pending": true
+      }
+     ]
+    },
+    {
+     "type": "note",
+     "kind": "checkin",
+     "label": "Check-in",
+     "title": "The Loft House Madrid · C. de la Esperanza, 4"
+    },
+    {
+     "type": "note",
+     "kind": "alert",
+     "title": "Deixe as malas prontas hoje",
+     "text": "O voo de volta sai cedo: a saída do hostel é de madrugada."
+    }
+   ]
+  },
+  {
+   "n": 24,
+   "date": "2027-06-21",
+   "trecho": 5,
+   "place": "Madri → São Paulo",
+   "mapCity": "Madrid",
+   "title": "Hora de voltar, com a mala cheia de histórias",
+   "blocks": [
+    {
+     "type": "steps",
+     "title": "Como chegar",
+     "items": [
+      {
+       "name": "Uber até o aeroporto",
+       "detail": "Peça o carro com folga"
+      },
+      {
+       "name": "Chegar ao aeroporto",
+       "detail": "3 horas para check-in, despacho e imigração",
+       "time": "04:40"
+      },
+      {
+       "name": "Voo para São Paulo",
+       "detail": "Madrid-Barajas",
+       "time": "07:40"
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "transfers": [
+  {
+   "date": "2027-05-29",
+   "route": "Lisboa Oriente → Porto Campanhã",
+   "mode": "Ônibus Flixbus",
+   "time": "17:00 → 20:15"
+  },
+  {
+   "date": "2027-06-01",
+   "route": "Porto Campanhã → Lisboa Oriente",
+   "mode": "Ônibus Flixbus",
+   "time": "10:00 → 13:15"
+  },
+  {
+   "date": "2027-06-03",
+   "route": "Lisboa Rossio → Sintra (bate-volta)",
+   "mode": "Comboio",
+   "time": "Ida e volta no dia"
+  },
+  {
+   "date": "2027-06-04",
+   "route": "Lisboa → Madri",
+   "mode": "Voo",
+   "time": "13:00 → 15:20"
+  },
+  {
+   "date": "2027-06-04",
+   "route": "Madri Atocha → Barcelona Sants",
+   "mode": "Trem OUIGO",
+   "time": "17:17 → 19:54"
+  },
+  {
+   "date": "2027-06-04",
+   "route": "Barcelona Nord → Lloret de Mar",
+   "mode": "Ônibus Moventis/Sarfa, linha 2",
+   "time": "Saída 22:00"
+  },
+  {
+   "date": "2027-06-08",
+   "route": "Lloret de Mar → Barcelona Nord",
+   "mode": "Ônibus Moventis/Sarfa, linha 2",
+   "time": "A definir"
+  },
+  {
+   "date": "2027-06-12",
+   "route": "Barcelona Sants → Madri Atocha",
+   "mode": "Trem AVLO",
+   "time": "09:55 → 13:19"
+  },
+  {
+   "date": "2027-06-14",
+   "route": "Madri Atocha → Sevilha Santa Justa",
+   "mode": "Trem IRYO",
+   "time": "08:55 → 11:37"
+  },
+  {
+   "date": "2027-06-16",
+   "route": "Sevilha ⇄ Ronda (bate-volta)",
+   "mode": "Ônibus · empresa a definir",
+   "time": "A definir"
+  },
+  {
+   "date": "2027-06-18",
+   "route": "Sevilha Plaza de Armas → Granada",
+   "mode": "Ônibus ALSA",
+   "time": "09:00 → 12:00"
+  },
+  {
+   "date": "2027-06-20",
+   "route": "Granada → Madri Estación Sur",
+   "mode": "Ônibus ALSA",
+   "time": "08:00 → 13:00"
+  },
+  {
+   "date": "2027-06-21",
+   "route": "Madri → São Paulo",
+   "mode": "Voo · chegar ao aeroporto às 04:40",
+   "time": "Embarque 07:40"
+  }
+ ],
+ "stays": [
+  {
+   "city": "Porto",
+   "name": "Porto Spot Hostel",
+   "address": "Rua Gonçalo Cristóvão, 12, Porto",
+   "from": "2027-05-29",
+   "to": "2027-06-01",
+   "url": "https://www.hostelworld.com/hostels/p/42599/porto-spot-hostel/",
+   "site": "Hostelworld"
+  },
+  {
+   "city": "Lisboa",
+   "name": "Lisbon Top Hostel",
+   "address": "Av. António Augusto de Aguiar, 30, Ap. 1D, Lisboa",
+   "from": "2027-06-01",
+   "to": "2027-06-04",
+   "url": "https://www.hotels.com/ho1091580576/",
+   "site": "Hotels.com"
+  },
+  {
+   "city": "Lloret de Mar",
+   "name": "Loft Hostal",
+   "address": "Carrer de Josep Lluhí, 11, 17310 Lloret de Mar",
+   "from": "2027-06-04",
+   "to": "2027-06-08",
+   "url": "https://www.hostelworld.com/hostels/p/286415/loft-hostal/",
+   "site": "Hostelworld"
+  },
+  {
+   "city": "Barcelona",
+   "name": "Hostel Casa Gràcia",
+   "address": "Pg. de Gràcia, 116 Bis, 08008 Barcelona",
+   "from": "2027-06-08",
+   "to": "2027-06-12",
+   "url": "https://www.booking.com/hotel/es/hostel-casa-gracia.html",
+   "site": "Booking"
+  },
+  {
+   "city": "Madri",
+   "name": "Ok Hostel Madrid",
+   "address": "C. de Juanelo, 24, 28012 Madrid",
+   "from": "2027-06-12",
+   "to": "2027-06-14",
+   "url": "https://www.hostelworld.com/hostels/p/94332/ok-hostel-madrid/",
+   "site": "Hostelworld"
+  },
+  {
+   "city": "Sevilha",
+   "name": "Sweet Sevilla Hostel",
+   "address": "C. Padre Marchena, 17, Sevilla",
+   "from": "2027-06-14",
+   "to": "2027-06-18",
+   "url": "https://www.hostelworld.com/hostels/p/310978/sweet-sevilla-hostel/",
+   "site": "Hostelworld"
+  },
+  {
+   "city": "Granada",
+   "name": "Granada Old Town Hostel",
+   "address": "C. Ángel, 8, Granada",
+   "from": "2027-06-18",
+   "to": "2027-06-20",
+   "url": "https://www.hotels.com/ho774905280/",
+   "site": "Hotels.com"
+  },
+  {
+   "city": "Madri",
+   "name": "The Loft House Madrid",
+   "address": "C. de la Esperanza, 4, 28012 Madrid",
+   "from": "2027-06-20",
+   "to": "2027-06-21",
+   "url": "https://www.hostelworld.com/hostels/p/323403/the-loft-house-madrid/",
+   "site": "Hostelworld"
+  }
+ ],
+ "checklist": [
+  {
+   "id": "hosp-0",
+   "text": "Porto Spot Hostel · Porto · 3 noites",
+   "url": "https://www.hostelworld.com/hostels/p/42599/porto-spot-hostel/",
+   "site": "Hostelworld"
+  },
+  {
+   "id": "hosp-1",
+   "text": "Lisbon Top Hostel · Lisboa · 3 noites",
+   "url": "https://www.hotels.com/ho1091580576/",
+   "site": "Hotels.com"
+  },
+  {
+   "id": "hosp-2",
+   "text": "Loft Hostal · Lloret de Mar · 4 noites",
+   "url": "https://www.hostelworld.com/hostels/p/286415/loft-hostal/",
+   "site": "Hostelworld"
+  },
+  {
+   "id": "hosp-3",
+   "text": "Hostel Casa Gràcia · Barcelona · 4 noites",
+   "url": "https://www.booking.com/hotel/es/hostel-casa-gracia.html",
+   "site": "Booking"
+  },
+  {
+   "id": "hosp-4",
+   "text": "Ok Hostel Madrid · Madri · 2 noites",
+   "url": "https://www.hostelworld.com/hostels/p/94332/ok-hostel-madrid/",
+   "site": "Hostelworld"
+  },
+  {
+   "id": "hosp-5",
+   "text": "Sweet Sevilla Hostel · Sevilha · 4 noites",
+   "url": "https://www.hostelworld.com/hostels/p/310978/sweet-sevilla-hostel/",
+   "site": "Hostelworld"
+  },
+  {
+   "id": "hosp-6",
+   "text": "Granada Old Town Hostel · Granada · 2 noites",
+   "url": "https://www.hotels.com/ho774905280/",
+   "site": "Hotels.com"
+  },
+  {
+   "id": "hosp-7",
+   "text": "The Loft House Madrid · Madri · 1 noite",
+   "url": "https://www.hostelworld.com/hostels/p/323403/the-loft-house-madrid/",
+   "site": "Hostelworld"
+  },
+  {
+   "id": "desl-0",
+   "text": "Lisboa Oriente → Porto Campanhã · Ônibus Flixbus",
+   "url": "https://www.flixbus.pt/",
+   "site": "Flixbus"
+  },
+  {
+   "id": "desl-1",
+   "text": "Porto Campanhã → Lisboa Oriente · Ônibus Flixbus",
+   "url": "https://www.flixbus.pt/",
+   "site": "Flixbus"
+  },
+  {
+   "id": "desl-4",
+   "text": "Madri Atocha → Barcelona Sants · Trem OUIGO",
+   "url": "https://www.ouigo.com/es/",
+   "site": "OUIGO"
+  },
+  {
+   "id": "desl-5",
+   "text": "Barcelona Nord → Lloret de Mar · Ônibus Moventis/Sarfa, linha 2",
+   "url": "https://www.movelia.es/es/rutas/autobuses/barcelona-lloret-de-mar",
+   "site": "Movelia (Moventis Sarfa)"
+  },
+  {
+   "id": "desl-6",
+   "text": "Lloret de Mar → Barcelona Nord · Ônibus Moventis/Sarfa, linha 2",
+   "url": "https://www.movelia.es/es/rutas/autobuses/lloret-de-mar-barcelona",
+   "site": "Movelia (Moventis Sarfa)"
+  },
+  {
+   "id": "desl-7",
+   "text": "Barcelona Sants → Madri Atocha · Trem AVLO",
+   "url": "https://www.renfe.com/",
+   "site": "Renfe (AVLO)"
+  },
+  {
+   "id": "desl-8",
+   "text": "Madri Atocha → Sevilha Santa Justa · Trem IRYO",
+   "url": "https://iryo.eu/",
+   "site": "iryo"
+  },
+  {
+   "id": "desl-9",
+   "text": "Sevilha ⇄ Ronda (bate-volta) · Ônibus · empresa a definir",
+   "url": "https://www.movelia.es/es/empresas-autobuses/damas",
+   "site": "Movelia (Damas)"
+  },
+  {
+   "id": "desl-10",
+   "text": "Sevilha Plaza de Armas → Granada · Ônibus ALSA",
+   "url": "https://www.alsa.es/",
+   "site": "ALSA"
+  },
+  {
+   "id": "desl-11",
+   "text": "Granada → Madri Estación Sur · Ônibus ALSA",
+   "url": "https://www.alsa.es/",
+   "site": "ALSA"
+  },
+  {
+   "id": "ingr-0",
+   "text": "Ingresso com horário: Palácio da Pena",
+   "url": "https://www.parquesdesintra.pt/",
+   "site": "Parques de Sintra"
+  },
+  {
+   "id": "ingr-1",
+   "text": "Ingresso com horário: Sagrada Família",
+   "url": "https://sagradafamilia.org/",
+   "site": "Sagrada Família"
+  },
+  {
+   "id": "ingr-2",
+   "text": "Ingresso com horário: Park Güell",
+   "url": "https://parkguell.barcelona/",
+   "site": "Park Güell"
+  },
+  {
+   "id": "ingr-3",
+   "text": "Ingresso com horário: Casa Batlló",
+   "url": "https://www.casabatllo.es/",
+   "site": "Casa Batlló"
+  },
+  {
+   "id": "ingr-3b",
+   "text": "Ingresso com horário: Casa Milà · La Pedrera",
+   "url": "https://www.lapedrera.com/",
+   "site": "La Pedrera"
+  },
+  {
+   "id": "ingr-4",
+   "text": "Ingresso com horário: Real Alcázar",
+   "url": "https://www.alcazarsevilla.org/",
+   "site": "Real Alcázar"
+  },
+  {
+   "id": "ingr-5",
+   "text": "Ingresso com horário: Alhambra",
+   "url": "https://tickets.alhambra-patronato.es/",
+   "site": "Alhambra (oficial)"
+  }
+ ],
+ "cards": [
+  {
+   "city": "Lisboa",
+   "text": "Cartão Navegante Ocasional, comprado na estação de metrô do aeroporto."
+  },
+  {
+   "city": "Barcelona",
+   "text": "T-Casual (bilhete de 10 viagens), comprado na estação Sants."
+  },
+  {
+   "city": "Madri",
+   "text": "No ônibus 203 do aeroporto, pague por aproximação com o cartão Wise."
+  }
+ ],
+ "timed": [
+  "Palácio da Pena",
+  "Sagrada Família",
+  "Park Güell",
+  "Casa Batlló · Casa Milà",
+  "Real Alcázar",
+  "Alhambra"
+ ]
+}
