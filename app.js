@@ -386,8 +386,22 @@ function footer() {
 
 /* ---------- roteamento ---------- */
 const TABS = [['#/', 'Hoje', 'home'], ['#/dias', 'Dias', 'cal'], ['#/trajetos', 'Trajetos', 'bus'], ['#/hospedagens', 'Estadia', 'bed'], ['#/vouchers', 'Vouchers', 'ticket']];
+/* ---------- proteção: marca d'água com o nome do cliente ---------- */
+function setWatermark(name) {
+  let el = document.getElementById('wm');
+  if (!name) { if (el) el.remove(); return; }
+  if (!el) { el = document.createElement('div'); el.id = 'wm'; el.setAttribute('aria-hidden', 'true'); document.body.append(el); }
+  const txt = `${name} · ${AG.name || 'Via Singularis Travel'}`;
+  if (el.dataset.txt === txt) return;
+  el.dataset.txt = txt;
+  const w = Math.max(260, txt.length * 8.4);
+  const svg = `<svg xmlns='http://www.w3.org/2000/svg' width='${w + 40}' height='170'><text x='20' y='95' transform='rotate(-24 ${w / 2} 85)' font-family='Figtree,Arial,sans-serif' font-size='15' font-weight='700' fill='#13223F' fill-opacity='0.07'>${txt.replace(/[<&'"]/g, '')}</text></svg>`;
+  el.style.backgroundImage = `url("data:image/svg+xml,${encodeURIComponent(svg)}")`;
+}
+
 function route() {
   if (!T) return;
+  setWatermark(TRIP?.client_name ? 'Roteiro exclusivo de ' + TRIP.client_name : '');
   const h = location.hash || '#/';
   let html, tab = '#/', m;
   if ((m = h.match(/^#\/dia\/(\d+)/))) { html = viewDay(+m[1]); tab = (todayDay()?.n === +m[1]) ? '#/' : '#/dias'; }
@@ -408,6 +422,7 @@ function route() {
 /* ---------- entrada: link + PIN ---------- */
 function screenGate(code, msg) {
   T = null; TRIP = null;
+  setWatermark('');
   setAccent(null);
   document.querySelector('.tabbar').hidden = true;
   document.title = AG.name || 'Via Singularis Travel';
@@ -483,6 +498,21 @@ document.addEventListener('change', e => {
   $('#ckbar').style.width = Math.round(done / total * 100) + '%';
 });
 document.addEventListener('click', e => { if (e.target.closest('#refresh')) refreshTrip(true); });
+
+/* ---------- proteção: cópia só de endereços, códigos e campos ---------- */
+const COPY_OK = 'input, textarea, .detail, .ad, .conf, .copyable';
+function selectionAllowed() {
+  const sel = window.getSelection(); if (!sel || sel.isCollapsed) return true;
+  const n = sel.anchorNode && (sel.anchorNode.nodeType === 1 ? sel.anchorNode : sel.anchorNode.parentElement);
+  return !!(n && n.closest(COPY_OK));
+}
+document.addEventListener('copy', e => {
+  const a = document.activeElement;
+  if (a && a.matches('input, textarea')) return;
+  if (!selectionAllowed()) { e.preventDefault(); toast('Conteúdo exclusivo do roteiro'); }
+});
+document.addEventListener('contextmenu', e => { if (!e.target.closest(COPY_OK) && e.target.closest('#app')) e.preventDefault(); });
+document.addEventListener('dragstart', e => { if (e.target.closest('#app img')) e.preventDefault(); });
 
 let sx = null, sy = null;
 document.addEventListener('touchstart', e => { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, {passive: true});

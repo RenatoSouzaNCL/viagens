@@ -1,6 +1,6 @@
 /* Guarda o app no aparelho para funcionar sem internet.
    Ao publicar uma alteração no app, aumente o número da VERSAO. */
-const VERSAO = 'vs-app-v1';
+const VERSAO = 'vs-app-v2';
 const ARQUIVOS = ['./', 'index.html', 'styles.css', 'config.js', 'api.js', 'app.js', 'manifest.webmanifest',
   'bricolage-latin.woff2', 'figtree-latin.woff2',
   'icon.svg', 'icon-192.png', 'icon-512.png', 'apple-touch-icon.png'];

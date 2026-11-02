@@ -209,3 +209,12 @@ body.is-offline .offline{display:block}
 .toast{position:fixed;left:50%;bottom:calc(var(--tabbar) + var(--safe-b) + 14px);transform:translateX(-50%);background:var(--navy);color:#fff;padding:10px 16px;border-radius:12px;font-size:14px;font-weight:600;z-index:30;box-shadow:0 6px 20px rgba(0,0,0,.2)}
 .previewbar{position:sticky;top:0;z-index:20;background:var(--amber);color:var(--navy);text-align:center;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:6px}
 .stay .conf{font-size:14px;margin-top:6px;background:var(--soft);border-radius:10px;padding:6px 10px;word-break:break-word}
+
+/* ---------- proteção do conteúdo ---------- */
+#wm{position:fixed;inset:0;z-index:25;pointer-events:none;background-repeat:repeat;background-position:0 0}
+#app{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+#app input,#app textarea,#app .detail,#app .ad,#app .conf,#app .copyable{-webkit-user-select:text;user-select:text;-webkit-touch-callout:default}
+@media print{
+  #app,.tabbar,#wm,.offline{display:none!important}
+  body::after{content:'Este roteiro é exclusivo e não pode ser impresso. Fale com a agência.';display:block;padding:40px;font:16px sans-serif}
+}
