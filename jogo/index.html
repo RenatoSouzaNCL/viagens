@@ -60,6 +60,16 @@ p{margin:0}
 .how b{display:block;font-family:var(--display);font-size:22px;color:var(--amber)}
 .best{font-size:13px;color:#AEB8CE}
 
+.levels{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;width:100%}
+.lvl{display:flex;flex-direction:column;gap:4px;align-items:flex-start;text-align:left;background:rgba(255,255,255,.07);border:2px solid rgba(255,255,255,.14);border-radius:14px;padding:10px 12px;color:var(--paper)}
+.lvl b{font-family:var(--display);font-size:18px}
+.lvl small{font-size:12px;color:#AEB8CE;line-height:1.3}
+.lvl.on{border-color:var(--amber);background:rgba(233,166,44,.14)}
+.lvl.on b{color:var(--amber)}
+.photo{margin:0;display:flex;flex-direction:column;gap:6px}
+.photo img{display:block;width:100%;height:240px;object-fit:cover;border-radius:16px;background:var(--sky2)}
+.photo figcaption{font-size:11px;color:var(--muted)}
+.photo a{color:inherit}
 .banner{display:block;width:100%;height:auto;border-radius:16px;background:var(--sky2)}
 .city-h{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap}
 .fact{font-size:14px;background:var(--paper2);border-radius:12px;padding:10px 12px}
@@ -100,7 +110,7 @@ p{margin:0}
 .foot a{color:var(--amber)}
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--paper);color:var(--ink);font-weight:700;padding:10px 16px;border-radius:12px;z-index:9;box-shadow:0 8px 24px rgba(0,0,0,.35)}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
-@media (max-width:420px){.how{grid-template-columns:1fr}.passes{grid-template-columns:1fr}.cast svg{height:120px}.cast .gull{height:88px}}
+@media (max-width:420px){.levels{grid-template-columns:1fr}.lvl{flex-direction:row;align-items:baseline;gap:10px}.photo img{height:200px}.how{grid-template-columns:1fr}.passes{grid-template-columns:1fr}.cast svg{height:120px}.cast .gull{height:88px}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 
@@ -163,6 +173,48 @@ const JOGO = {
   custoPista: 2, custoVoo: 6, custoErro: 10, custoChute: 6,
 };
 
+/* ===== níveis de dificuldade ===== */
+const NIVEIS = {
+  facil:   { nome: 'Fácil',   desc: '4 cidades · 3 opções de voo · pistas mais claras', paradas: 4, horas: 120, opcoes: 3, corrida: 12000, vel: 240, mult: 1 },
+  medio:   { nome: 'Médio',   desc: '5 cidades · 4 opções de voo',                     paradas: 5, horas: 96,  opcoes: 4, corrida: 16000, vel: 300, mult: 1.5 },
+  dificil: { nome: 'Difícil', desc: '6 cidades · 6 opções · sem dica de monumento',    paradas: 6, horas: 84,  opcoes: 6, corrida: 20000, vel: 360, mult: 2 },
+};
+let NIVEL = 'medio';
+
+/* ===== fotos dos pontos turísticos (Wikimedia Commons, licenças livres) =====
+   O jogo busca a foto, o autor e a licença direto no Commons; sem internet, mostra a silhueta. */
+const FOTOS = {
+  lisboa: 'Torre de Belém - Lisboa Portugal.jpg',
+  paris: 'Paris - The Eiffel Tower in spring - 2307.jpg',
+  roma: 'Colosseum - Rome - Italy (16800139540).jpg',
+  barcelona: 'La Sagrada Família Basílica in Barcelona, Spain.jpg',
+  londres: 'Big Ben Elizabeth Tower London 2023 01.jpg',
+  novayork: 'Statue of Liberty, NY.jpg',
+  buenosaires: 'Buenos Aires - Obelisco.jpg',
+  cusco: 'Machu Picchu, Peru.jpg',
+  toquio: 'Tokyo Tower, Minato City.jpg',
+  cairo: 'All Gizah Pyramids.jpg',
+};
+const FOTO = {}; // id -> { src, autor, licenca, pagina }
+async function carregarFotos() {
+  try {
+    const titles = Object.values(FOTOS).map(f => 'File:' + f).join('|');
+    const url = 'https://commons.wikimedia.org/w/api.php?origin=*&format=json&action=query&prop=imageinfo&iiprop=url|extmetadata&iiurlwidth=960&titles=' + encodeURIComponent(titles);
+    const r = await fetch(url); if (!r.ok) return;
+    const j = await r.json();
+    const txt = h => { const d = document.createElement('div'); d.innerHTML = h || ''; return (d.textContent || '').replace(/\s+/g, ' ').trim(); };
+    const norm = t => (t || '').replace(/^File:/, '').replace(/_/g, ' ');
+    const porNome = {};
+    for (const pg of Object.values(j.query?.pages || {})) {
+      const ii = pg.imageinfo?.[0]; if (!ii) continue;
+      const m = ii.extmetadata || {};
+      porNome[norm(pg.title)] = { src: ii.thumburl || ii.url, autor: txt(m.Artist?.value).slice(0, 80) || 'autor no Commons', licenca: txt(m.LicenseShortName?.value) || 'licença livre', pagina: ii.descriptionurl };
+    }
+    (j.query?.normalized || []).forEach(n => { if (porNome[norm(n.to)]) porNome[norm(n.from)] = porNome[norm(n.to)]; });
+    for (const [id, f] of Object.entries(FOTOS)) { const x = porNome[f]; if (x && x.src) { FOTO[id] = x; const im = new Image(); im.src = x.src; } }
+  } catch { /* sem internet ou bloqueado: fica a silhueta */ }
+}
+
 /* ===== personagens (originais) ===== */
 const MALINHA = `<svg viewBox="0 0 120 150" role="img" aria-label="Agente Malinha, uma mala detetive">
   <ellipse cx="60" cy="144" rx="38" ry="5" fill="rgba(0,0,0,.25)"/>
@@ -210,8 +262,9 @@ function toast(t) { const el = document.createElement('div'); el.className = 'to
 /* ===== estado ===== */
 let S = null;
 function novoCaso() {
-  const rota = shuffle(CIDADES.map(c => c.id)).slice(0, JOGO.paradas);
-  S = { rota, idx: 0, horas: JOGO.horas, moedas: 0, erros: 0, pistas: [], opcoes: null, errados: [] };
+  const N = NIVEIS[NIVEL];
+  const rota = shuffle(CIDADES.map(c => c.id)).slice(0, N.paradas);
+  S = { rota, idx: 0, horas: N.horas, moedas: 0, erros: 0, pistas: [], opcoes: null, errados: [], nivel: NIVEL };
 }
 const atual = () => city(S.rota[S.idx]);
 const proxima = () => city(S.rota[S.idx + 1]);
@@ -240,7 +293,9 @@ const ESCONDE = {
 function pista(wid) {
   const w = TESTEMUNHAS.find(x => x.id === wid);
   if (ehFinal()) return ESCONDE[wid](atual());
-  const c = proxima(); let tipo = pick(w.tipos);
+  const c = proxima(); let tipos = w.tipos;
+  if (w.id === 'guia') tipos = NIVEL === 'facil' ? ['monumento'] : NIVEL === 'dificil' ? ['extra'] : tipos;
+  let tipo = pick(tipos);
   if (tipo === 'moeda' && c.moeda[0] === 'euros') tipo = 'bandeira'; // euro vale para várias cidades
   return FRASE[tipo](pick(c[tipo]));
 }
@@ -309,23 +364,26 @@ function hud() {
 }
 
 function telaInicio() {
-  const best = store.get('mp-recorde', 0);
+  NIVEL = store.get('mp-nivel', 'medio'); if (!NIVEIS[NIVEL]) NIVEL = 'medio';
+  const best = store.get('mp-recorde-' + NIVEL, 0);
   app.innerHTML = `<section class="hero">
     <div class="cast">${MALINHA}${GAIVOTA}</div>
     <h1>Missão<span>Passaporte</span></h1>
     <p>A Gaivota Larápia roubou os cartões-postais mais famosos do mundo. Siga as pistas, voe atrás dela e recupere tudo antes que o tempo acabe.</p>
-    <button class="btn" id="go">Começar missão</button>
+    <div class="levels" role="radiogroup" aria-label="Dificuldade">${Object.entries(NIVEIS).map(([k, n]) => `<button class="lvl${k === NIVEL ? ' on' : ''}" role="radio" aria-checked="${k === NIVEL}" data-n="${k}"><b>${n.nome}</b><small>${n.desc}</small></button>`).join('')}</div>
+    <button class="btn" id="go">Começar missão · ${NIVEIS[NIVEL].nome}</button>
     <div class="how"><div><b>1</b>Ouça as testemunhas em cada cidade</div><div><b>2</b>Escolha o próximo destino no cartão de embarque</div><div><b>3</b>Corra pelo aeroporto pegando moedas</div></div>
-    ${best ? `<p class="best">Seu recorde: ${best} pontos</p>` : ''}
+    ${best ? `<p class="best">Seu recorde no ${NIVEIS[NIVEL].nome}: ${best} pontos</p>` : ''}
     <p class="foot">Um jogo da <a href="${JOGO.site}" target="_blank" rel="noopener">Via Singularis Travel</a></p>
   </section>`;
   $('#go').onclick = () => { novoCaso(); telaBriefing(); };
+  app.querySelectorAll('.lvl').forEach(b => b.onclick = () => { store.set('mp-nivel', b.dataset.n); telaInicio(); });
 }
 
 function telaBriefing() {
   const c = atual();
   app.innerHTML = `${hud()}<section class="card msg">
-    <span class="eyebrow">Caso aberto</span><h2>Alerta em ${esc(c.nome)}!</h2>
+    <span class="eyebrow">Caso aberto · nível ${NIVEIS[NIVEL].nome}</span><h2>Alerta em ${esc(c.nome)}!</h2>
     <p>A Gaivota Larápia foi vista em <b>${esc(c.nome)}, ${esc(c.pais)}</b> com uma pilha de cartões-postais roubados. Ela vai passar por ${S.rota.length - 1} cidades até se esconder.</p>
     <p class="sub">Você tem <b>${S.horas} horas</b>. Cada testemunha custa ${JOGO.custoPista} h e cada voo, ${JOGO.custoVoo} h. Voo errado custa ${JOGO.custoErro} h.</p>
     <button class="btn dark" id="go">Investigar</button></section>`;
@@ -342,7 +400,11 @@ function telaCidade() {
     <div class="wits">${TESTEMUNHAS.map(w => `<button class="wit" data-w="${w.id}"${S.pistas.some(p => p.w === w.id) ? ' disabled' : ''}>${ICON[w.id]}${w.nome}<small>−${JOGO.custoPista} h</small></button>`).join('')}</div>
     <div class="notes">${S.pistas.map(p => `<div class="note"><b>${esc(p.nome)}</b>${esc(p.t)}</div>`).join('')}</div>
     <button class="btn" id="go">${final ? 'Descobrir o esconderijo' : 'Escolher o próximo destino'}</button></section>`;
-  $('#bn').append(cityBanner(c));
+  const f = FOTO[c.id], bn = $('#bn');
+  if (f) {
+    bn.innerHTML = `<figure class="photo"><img src="${esc(f.src)}" alt="${esc(c.monumento[0])}, ${esc(c.nome)}"><figcaption>Foto: ${esc(f.autor)} · ${esc(f.licenca)} · <a href="${esc(f.pagina)}" target="_blank" rel="noopener">Wikimedia Commons</a></figcaption></figure>`;
+    bn.querySelector('img').onerror = () => { bn.innerHTML = ''; bn.append(cityBanner(c)); };
+  } else bn.append(cityBanner(c));
   app.querySelectorAll('.wit').forEach(b => b.onclick = () => {
     if (!gastar(JOGO.custoPista)) return;
     const w = TESTEMUNHAS.find(x => x.id === b.dataset.w);
@@ -354,7 +416,7 @@ function telaCidade() {
 
 function telaDestinos() {
   const certa = proxima();
-  if (!S.opcoes) S.opcoes = shuffle([certa.id, ...shuffle(CIDADES.filter(c => c.id !== certa.id && c.id !== atual().id).map(c => c.id)).slice(0, 3)]);
+  if (!S.opcoes) S.opcoes = shuffle([certa.id, ...shuffle(CIDADES.filter(c => c.id !== certa.id && c.id !== atual().id).map(c => c.id)).slice(0, NIVEIS[NIVEL].opcoes - 1)]);
   app.innerHTML = `${hud()}<section class="card" style="display:flex;flex-direction:column;gap:14px">
     <span class="eyebrow">Portão de embarque</span><h2>Escolha o voo</h2>
     <p class="sub">Confira as pistas e embarque para onde a Gaivota foi.</p>
@@ -381,7 +443,7 @@ function embarcar(id) {
 
 function telaEsconderijo() {
   const c = atual();
-  if (!S.opcoes) S.opcoes = shuffle([c.id, ...shuffle(CIDADES.filter(x => x.id !== c.id).map(x => x.id)).slice(0, 3)]);
+  if (!S.opcoes) S.opcoes = shuffle([c.id, ...shuffle(CIDADES.filter(x => x.id !== c.id).map(x => x.id)).slice(0, NIVEIS[NIVEL].opcoes - 1)]);
   app.innerHTML = `${hud()}<section class="card" style="display:flex;flex-direction:column;gap:14px">
     <span class="eyebrow">Flagrante</span><h2>Onde a Gaivota se escondeu?</h2>
     <p class="sub">Ela está no cartão-postal mais famoso de ${esc(c.nome)}. Chute errado custa ${JOGO.custoChute} h.</p>
@@ -404,9 +466,9 @@ function telaCorrida(dest) {
     <p class="tip">Toque na tela ou aperte <b>espaço</b> para pular os obstáculos e pegar moedas.</p>
     <button class="btn ghost" id="skip">Pular corrida</button></section>`;
   const cv = $('#run'), x = cv.getContext('2d'), W = 480, H = 300, G = 250;
-  const DUR = 16000; let t0 = null, last = 0, coins = 0, hits = 0, inv = 0;
+  const DUR = NIVEIS[NIVEL].corrida, V0 = NIVEIS[NIVEL].vel; let t0 = null, last = 0, coins = 0, hits = 0, inv = 0;
   const p = { x: 70, y: G, vy: 0, w: 46, h: 54 };
-  const items = []; let spawn = 0, speed = 300, bgX = 0, done = false;
+  const items = []; let spawn = 0, speed = V0, bgX = 0, done = false;
   const jump = () => { if (p.y >= G - .5) { p.vy = -760; } };
   const key = e => { if (e.code === 'Space' || e.code === 'ArrowUp') { e.preventDefault(); jump(); } };
   cv.addEventListener('pointerdown', e => { e.preventDefault(); jump(); });
@@ -431,7 +493,7 @@ function telaCorrida(dest) {
   function frame(ts) {
     if (!t0) { t0 = ts; last = ts; }
     const dt = Math.min(40, ts - last) / 1000; last = ts; const el = ts - t0;
-    speed = 300 + el / 60; bgX = (bgX + speed * dt * .25) % W;
+    speed = V0 + el / 60; bgX = (bgX + speed * dt * .25) % W;
     p.vy += 2100 * dt; p.y = Math.min(G, p.y + p.vy * dt); if (p.y >= G) p.vy = 0;
     if (inv > 0) inv -= dt * 1000;
     spawn -= dt * 1000;
@@ -440,7 +502,7 @@ function telaCorrida(dest) {
       if (r < .42) items.push({ k: 'cone', x: W + 20, y: G, w: 26, h: 34 });
       else if (r < .58) items.push({ k: 'cart', x: W + 20, y: G, w: 46, h: 30 });
       else { const hgt = Math.random() < .5 ? 0 : 70; for (let i = 0; i < 3; i++) items.push({ k: 'coin', x: W + 20 + i * 34, y: G - 30 - hgt, w: 20, h: 20 }); }
-      spawn = 700 + Math.random() * 650;
+      spawn = (NIVEL === 'dificil' ? 560 : NIVEL === 'facil' ? 900 : 700) + Math.random() * 650;
     }
     // fundo
     const gr = x.createLinearGradient(0, 0, 0, H); gr.addColorStop(0, '#1E3A6E'); gr.addColorStop(1, dest.cor); x.fillStyle = gr; x.fillRect(0, 0, W, H);
@@ -479,10 +541,10 @@ function fim(venceu) {
   cancelAnimationFrame(loop);
   const postais = venceu ? S.rota.length - 1 : S.idx;
   const pts = venceu ? { horas: S.horas * 10, moedas: S.moedas * 5, bonus: S.erros === 0 ? 200 : 0 } : { horas: 0, moedas: S.moedas * 5, bonus: postais * 40 };
-  const total = pts.horas + pts.moedas + pts.bonus;
-  const rank = !venceu ? 'Turista distraído' : total >= 900 ? 'Agente Ouro' : total >= 600 ? 'Detetive Viajante' : 'Estagiário de Bordo';
-  const best = store.get('mp-recorde', 0); const recorde = total > best; if (recorde) store.set('mp-recorde', total);
-  const texto = venceu ? `Peguei a Gaivota Larápia e recuperei ${postais} cartões-postais! Fiz ${total} pontos na Missão Passaporte. Consegue me superar?` : `A Gaivota Larápia escapou de mim depois de ${postais} cidades. Fiz ${total} pontos na Missão Passaporte. Tenta você!`;
+  const N = NIVEIS[NIVEL], base = pts.horas + pts.moedas + pts.bonus, total = Math.round(base * N.mult);
+  const rank = !venceu ? 'Turista distraído' : total >= 1200 ? 'Agente Ouro' : total >= 700 ? 'Detetive Viajante' : 'Estagiário de Bordo';
+  const best = store.get('mp-recorde-' + NIVEL, 0); const recorde = total > best; if (recorde) store.set('mp-recorde-' + NIVEL, total);
+  const texto = venceu ? `Peguei a Gaivota Larápia e recuperei ${postais} cartões-postais! Fiz ${total} pontos no nível ${N.nome} da Missão Passaporte. Consegue me superar?` : `A Gaivota Larápia escapou de mim depois de ${postais} cidades. Fiz ${total} pontos na Missão Passaporte. Tenta você!`;
   const share = `${texto} ${JOGO.compartilhar}`;
   app.innerHTML = `<section class="card msg">
     <div class="cast" style="margin:0">${venceu ? MALINHA : GAIVOTA}</div>
@@ -491,6 +553,7 @@ function fim(venceu) {
     <span class="rank">${rank}</span>
     <div class="score">${venceu ? `<span>Horas de sobra (${S.horas} h × 10)</span><span>${pts.horas}</span>` : ''}<span>Moedas (${S.moedas} × 5)</span><span>${pts.moedas}</span>
       <span>${venceu ? 'Bônus sem errar nenhum voo' : `Postais recuperados (${postais} × 40)`}</span><span>${pts.bonus}</span>
+      ${N.mult !== 1 ? `<span>Nível ${N.nome} (× ${String(N.mult).replace('.', ',')})</span><span>${total - base >= 0 ? '+' : ''}${total - base}</span>` : ''}
       <span class="tot">Total</span><span class="tot">${total}</span></div>
     ${recorde ? '<p><b>Novo recorde!</b></p>' : best ? `<p class="sub">Seu recorde: ${best}</p>` : ''}
     <div class="row" style="width:100%"><button class="btn" id="share">Compartilhar</button><a class="btn dark" href="https://wa.me/?text=${encodeURIComponent(share)}" target="_blank" rel="noopener" style="text-decoration:none">Enviar no WhatsApp</a></div>
@@ -498,6 +561,7 @@ function fim(venceu) {
   </section>
   <p class="foot">Gostou de viajar pelo mundo? <a href="${JOGO.site}" target="_blank" rel="noopener">Conheça as viagens da Via Singularis Travel</a></p>`;
   $('#again').onclick = () => { novoCaso(); telaBriefing(); };
+  const menu = document.createElement('button'); menu.className = 'btn ghost'; menu.textContent = 'Trocar nível'; menu.onclick = telaInicio; app.append(menu);
   $('#share').onclick = async () => {
     try { if (navigator.share) { await navigator.share({ title: 'Missão Passaporte', text: texto, url: JOGO.compartilhar }); return; } } catch (e) { if (e && e.name === 'AbortError') return; }
     try { await navigator.clipboard.writeText(share); toast('Texto copiado! Cole onde quiser.'); }
@@ -505,6 +569,7 @@ function fim(venceu) {
   };
 }
 
+carregarFotos();
 telaInicio();
 </script>
 
