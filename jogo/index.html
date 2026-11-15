@@ -1,0 +1,512 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Missão Passaporte: um jogo de detetive viajante da Via Singularis Travel">
+<title>Missão Passaporte</title>
+<style>
+@font-face{font-family:'Bricolage Grotesque';src:url(../bricolage-latin.woff2) format('woff2');font-weight:200 800;font-display:swap}
+@font-face{font-family:'Figtree';src:url(../figtree-latin.woff2) format('woff2');font-weight:300 900;font-display:swap}
+/* Layout: uma "caderneta de viagem" central, cartões de embarque como escolhas, céu noturno de aeroporto ao fundo */
+:root{
+  --sky:#0E1A33; --sky2:#16284D; --paper:#F7EEDC; --paper2:#EADDC3; --ink:#13223F; --muted:#5D6578;
+  --amber:#E9A62C; --coral:#E2694A; --mint:#3FB28E; --line:rgba(19,34,63,.14);
+  --display:'Bricolage Grotesque',system-ui,sans-serif; --text:'Figtree',system-ui,-apple-system,'Segoe UI',sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{background:var(--sky)}
+html,body{min-height:100%}
+body{margin:0;background:radial-gradient(1200px 600px at 50% -10%,#1E3A6E 0%,var(--sky) 60%) fixed,var(--sky);color:var(--paper);font-family:var(--text);font-size:16px;line-height:1.45;-webkit-font-smoothing:antialiased;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 32px}
+button{font:inherit;cursor:pointer}
+.wrap{max-width:560px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+.hud{display:flex;align-items:center;gap:10px;justify-content:space-between;font-weight:700;font-size:14px}
+.hud .brand{font-family:var(--display);letter-spacing:.02em;color:var(--amber)}
+.chip{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:6px 11px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.chip.low{background:rgba(226,105,74,.25);border-color:var(--coral)}
+.chip svg{width:15px;height:15px}
+.stamps{display:flex;gap:6px}
+.stamps i{width:14px;height:14px;border-radius:4px;border:1.5px dashed rgba(247,238,220,.45);display:block}
+.stamps i.on{background:var(--amber);border:1.5px solid var(--amber)}
+
+.card{background:var(--paper);color:var(--ink);border-radius:22px;padding:20px;box-shadow:0 18px 40px rgba(0,0,0,.35);position:relative}
+.eyebrow{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--coral)}
+h1,h2,h3{font-family:var(--display);margin:0;line-height:1.05;text-wrap:balance}
+h1{font-size:clamp(40px,11vw,64px);font-weight:800;letter-spacing:-.02em}
+h2{font-size:clamp(28px,7vw,38px);font-weight:800;letter-spacing:-.01em}
+h3{font-size:18px;font-weight:700}
+p{margin:0}
+.sub{color:var(--muted)}
+.hero{text-align:center;display:flex;flex-direction:column;align-items:center;gap:12px;padding-top:6px}
+.hero h1 span{display:block;color:var(--amber)}
+.hero p{color:#CFD7E8;max-width:40ch}
+.cast{display:flex;align-items:flex-end;justify-content:center;gap:4px;margin:4px 0 -4px}
+.cast svg{height:150px;width:auto}
+.cast .gull{height:110px;animation:bob 2.4s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-8px) rotate(-3deg)}}
+
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;border:0;border-radius:16px;padding:15px 18px;font-weight:800;font-size:17px;background:var(--amber);color:var(--ink);box-shadow:0 4px 0 #B47A12;transition:transform .08s}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0 #B47A12}
+.btn.ghost{background:transparent;color:var(--paper);box-shadow:inset 0 0 0 2px rgba(247,238,220,.35)}
+.btn.dark{background:var(--ink);color:var(--paper);box-shadow:0 4px 0 #050B18}
+.btn:focus-visible,.pass:focus-visible,.wit:focus-visible{outline:3px solid #fff;outline-offset:3px}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.row>*{flex:1 1 160px}
+
+.how{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;text-align:left}
+.how div{background:rgba(255,255,255,.07);border-radius:14px;padding:12px;font-size:13px;color:#DCE3F1}
+.how b{display:block;font-family:var(--display);font-size:22px;color:var(--amber)}
+.best{font-size:13px;color:#AEB8CE}
+
+.banner{display:block;width:100%;height:auto;border-radius:16px;background:var(--sky2)}
+.city-h{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.fact{font-size:14px;background:var(--paper2);border-radius:12px;padding:10px 12px}
+.fact b{color:var(--coral)}
+
+.wits{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.wit{display:flex;flex-direction:column;align-items:center;gap:6px;background:#fff;border:2px solid var(--line);border-radius:16px;padding:12px 6px;color:var(--ink);font-weight:700;font-size:14px}
+.wit svg{width:44px;height:44px}
+.wit small{font-weight:600;color:var(--muted);font-size:12px}
+.wit[disabled]{opacity:.55;cursor:default}
+.notes{display:flex;flex-direction:column;gap:8px;min-height:20px}
+.note{background:#FFF8E6;border-left:4px solid var(--amber);border-radius:10px;padding:10px 12px;font-size:15px;animation:pop .25s ease-out}
+.note b{display:block;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+@keyframes pop{from{transform:scale(.96);opacity:.4}}
+
+.passes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.pass{position:relative;text-align:left;background:#fff;border:0;border-radius:14px;padding:12px 12px 12px 16px;color:var(--ink);box-shadow:0 2px 0 var(--line);overflow:hidden}
+.pass::before{content:'';position:absolute;left:0;top:0;bottom:0;width:6px;background:var(--c)}
+.pass small{display:block;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.pass b{display:block;font-family:var(--display);font-size:20px;line-height:1.1}
+.pass span{font-size:13px;color:var(--muted)}
+.pass::after{content:'';position:absolute;right:46px;top:8px;bottom:8px;border-right:2px dashed var(--line)}
+.pass.spot::after{display:none}
+.pass em{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-style:normal;font-family:var(--display);font-weight:800;font-size:13px;color:var(--c)}
+
+.runwrap{position:relative}
+#run{display:block;width:100%;height:auto;border-radius:18px;background:var(--sky2);touch-action:manipulation;cursor:pointer}
+.runhud{position:absolute;left:12px;right:12px;top:10px;display:flex;justify-content:space-between;font-weight:800;font-size:14px;pointer-events:none;text-shadow:0 1px 2px rgba(0,0,0,.5)}
+.tip{text-align:center;font-size:14px;color:#CFD7E8}
+
+.msg{text-align:center;display:flex;flex-direction:column;gap:10px;align-items:center}
+.big{font-family:var(--display);font-size:64px;font-weight:800;line-height:1;color:var(--coral)}
+.score{display:grid;grid-template-columns:1fr auto;gap:6px 14px;font-size:15px;text-align:left;width:100%}
+.score span:nth-child(even){font-weight:800;text-align:right;font-variant-numeric:tabular-nums}
+.score .tot{border-top:2px solid var(--line);padding-top:8px;font-family:var(--display);font-size:20px}
+.rank{display:inline-block;background:var(--ink);color:var(--amber);font-family:var(--display);font-weight:800;padding:8px 14px;border-radius:999px;transform:rotate(-2deg)}
+.foot{text-align:center;font-size:13px;color:#AEB8CE}
+.foot a{color:var(--amber)}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--paper);color:var(--ink);font-weight:700;padding:10px 16px;border-radius:12px;z-index:9;box-shadow:0 8px 24px rgba(0,0,0,.35)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (max-width:420px){.how{grid-template-columns:1fr}.passes{grid-template-columns:1fr}.cast svg{height:120px}.cast .gull{height:88px}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+</head>
+<body>
+<main class="wrap" id="app" aria-live="polite"></main>
+
+<script>
+/* Conteúdo do jogo: cidades e pistas. Para incluir uma cidade, copie um bloco e ajuste.
+   As pistas descrevem a cidade sem dizer o nome dela. */
+const CIDADES = [
+  { id: 'lisboa', nome: 'Lisboa', pais: 'Portugal', cor: '#2E7D4F', fato: 'O bonde amarelo 28 sobe e desce as colinas de Lisboa desde 1914.',
+    comida: ['pastéis de nata ainda quentinhos', 'bacalhau com azeite'], idioma: ['“Obrigado!”', '“Bom dia, tudo bem?” com um sotaque diferente do nosso'],
+    moeda: ['euros'], monumento: ['a Torre de Belém', 'um bonde amarelo subindo a ladeira'], bandeira: ['verde e vermelha, com um escudo no meio'],
+    extra: ['Ficou ouvindo fado numa taberna', 'Perguntou onde ficava o bairro de Alfama'] },
+  { id: 'paris', nome: 'Paris', pais: 'França', cor: '#1D4E9E', fato: 'A Torre Eiffel foi construída para uma exposição em 1889 e era para ser temporária.',
+    comida: ['um croissant amanteigado', 'crepes de chocolate'], idioma: ['“Merci beaucoup!”', '“Bonjour!” com um biquinho caprichado'],
+    moeda: ['euros'], monumento: ['a Torre Eiffel', 'a pirâmide de vidro do Louvre'], bandeira: ['de três listras em pé: azul, branca e vermelha'],
+    extra: ['Passeou de barco pelo rio Sena', 'Queria ver a Mona Lisa de perto'] },
+  { id: 'roma', nome: 'Roma', pais: 'Itália', cor: '#B4472F', fato: 'Quem joga uma moeda na Fontana di Trevi, diz a tradição, volta para a cidade.',
+    comida: ['uma massa à carbonara', 'um gelato de pistache'], idioma: ['“Grazie mille!”', '“Ciao, bella!”'],
+    moeda: ['euros'], monumento: ['o Coliseu', 'uma fonte onde todo mundo joga moedas'], bandeira: ['de três listras em pé: verde, branca e vermelha'],
+    extra: ['Jogou uma moeda de costas numa fonte', 'Perguntou o caminho para o Vaticano'] },
+  { id: 'barcelona', nome: 'Barcelona', pais: 'Espanha', cor: '#A64B12', fato: 'A Sagrada Família, de Antoni Gaudí, está em construção desde 1882.',
+    comida: ['pão com tomate e azeite', 'tapas e churros'], idioma: ['“Gràcies!”, em catalão', '“Bon dia!”, também em catalão'],
+    moeda: ['euros'], monumento: ['uma basílica cheia de torres que nunca fica pronta', 'um parque com bancos de mosaico colorido'], bandeira: ['vermelha e amarela, com um brasão'],
+    extra: ['Caminhou pela Rambla até o porto', 'Queria ver um jogo no Camp Nou'] },
+  { id: 'londres', nome: 'Londres', pais: 'Reino Unido', cor: '#8E1F2F', fato: 'O nome Big Ben é o do sino, não o da torre do relógio.',
+    comida: ['fish and chips embrulhado no papel', 'chá das cinco com biscoitos'], idioma: ['“Cheers, mate!”', '“Thank you, lovely!”'],
+    moeda: ['libras esterlinas'], monumento: ['o Big Ben', 'um ônibus vermelho de dois andares'], bandeira: ['azul, com cruzes vermelhas e brancas'],
+    extra: ['Pegou o metrô que chamam de “Tube”', 'Esperou a troca da guarda no palácio'] },
+  { id: 'novayork', nome: 'Nova York', pais: 'Estados Unidos', cor: '#13223F', fato: 'O Central Park é maior do que o principado de Mônaco.',
+    comida: ['um bagel com cream cheese', 'um cachorro-quente de carrinho de rua'], idioma: ['“Thanks a lot!” bem apressado', '“Have a nice day!”'],
+    moeda: ['dólares'], monumento: ['a Estátua da Liberdade', 'um táxi amarelo no meio do trânsito'], bandeira: ['de listras vermelhas e brancas, com estrelas'],
+    extra: ['Passeou pelo Central Park', 'Queria ver as luzes da Times Square'] },
+  { id: 'buenosaires', nome: 'Buenos Aires', pais: 'Argentina', cor: '#3B8FD1', fato: 'O bairro de La Boca é famoso pelas casas pintadas de todas as cores.',
+    comida: ['alfajor de doce de leite', 'empanadas assadas'], idioma: ['“¡Gracias, che!”', '“¡Qué lindo día, che!”'],
+    moeda: ['pesos argentinos'], monumento: ['um obelisco branco no meio de uma avenida enorme', 'casinhas coloridas no bairro de La Boca'], bandeira: ['azul-clara e branca, com um sol no meio'],
+    extra: ['Assistiu a um casal dançando tango na rua', 'Tomou um mate com os amigos'] },
+  { id: 'cusco', nome: 'Cusco', pais: 'Peru', cor: '#9C3D2E', fato: 'Cusco fica a 3.400 metros de altitude e foi a capital do Império Inca.',
+    comida: ['um ceviche bem limãozinho', 'uma sopa quentinha de quinoa'], idioma: ['algumas palavras em quíchua, a língua dos incas', '“¡Gracias!” misturado com quíchua'],
+    moeda: ['soles'], monumento: ['as ruínas de Machu Picchu', 'uma lhama enfeitada com fitas coloridas'], bandeira: ['vermelha e branca, com três listras em pé'],
+    extra: ['Reclamou do ar rarefeito lá no alto', 'Comprou um gorro de lã de alpaca'] },
+  { id: 'toquio', nome: 'Tóquio', pais: 'Japão', cor: '#C7364A', fato: 'No cruzamento de Shibuya, até 3 mil pessoas atravessam a rua de uma só vez.',
+    comida: ['sushi numa esteira rolante', 'um ramen bem quente'], idioma: ['“Arigatō!” com uma reverência', '“Konnichiwa!”'],
+    moeda: ['ienes'], monumento: ['uma torre de metal pintada de vermelho e branco', 'o monte Fuji ao longe'], bandeira: ['branca, com um círculo vermelho no meio'],
+    extra: ['Pegou um trem-bala pontualíssimo', 'Queria ver as cerejeiras em flor'] },
+  { id: 'cairo', nome: 'Cairo', pais: 'Egito', cor: '#C08A2E', fato: 'A Grande Pirâmide de Gizé tem cerca de 4.500 anos.',
+    comida: ['koshari, o prato de rua mais famoso', 'tâmaras e chá de hibisco'], idioma: ['“Shukran!”, que é obrigado em árabe', '“Salam!”'],
+    moeda: ['libras egípcias'], monumento: ['as pirâmides de Gizé', 'a Esfinge'], bandeira: ['vermelha, branca e preta, com uma águia dourada'],
+    extra: ['Fez um passeio de barco pelo rio Nilo', 'Pechinchou num mercado cheio de especiarias'] },
+];
+
+
+/* ===== configuração ===== */
+const JOGO = {
+  site: 'https://www.vstravel.com.br/',        // "Conheça nossas viagens"
+  compartilhar: 'https://www.vstravel.com.br/', // link enviado ao compartilhar
+  horas: 96, paradas: 5,                         // horas iniciais e cidades por caso
+  custoPista: 2, custoVoo: 6, custoErro: 10, custoChute: 6,
+};
+
+/* ===== personagens (originais) ===== */
+const MALINHA = `<svg viewBox="0 0 120 150" role="img" aria-label="Agente Malinha, uma mala detetive">
+  <ellipse cx="60" cy="144" rx="38" ry="5" fill="rgba(0,0,0,.25)"/>
+  <rect x="44" y="30" width="32" height="14" rx="7" fill="none" stroke="#7A4A0C" stroke-width="6"/>
+  <rect x="14" y="40" width="92" height="88" rx="18" fill="#E9A62C"/>
+  <rect x="14" y="40" width="92" height="88" rx="18" fill="none" stroke="#B47A12" stroke-width="3"/>
+  <rect x="30" y="40" width="8" height="88" fill="#D08F1B"/><rect x="82" y="40" width="8" height="88" fill="#D08F1B"/>
+  <circle cx="47" cy="78" r="9" fill="#fff"/><circle cx="73" cy="78" r="9" fill="#fff"/>
+  <circle cx="49" cy="79" r="4.5" fill="#13223F"/><circle cx="75" cy="79" r="4.5" fill="#13223F"/>
+  <path d="M50 98 q10 8 20 0" fill="none" stroke="#13223F" stroke-width="3.5" stroke-linecap="round"/>
+  <rect x="62" y="104" width="30" height="16" rx="3" fill="#F7EEDC" transform="rotate(-8 77 112)"/>
+  <path d="M8 34 q52 -12 104 0 l-6 8 q-46 -8 -92 0z" fill="#13223F"/>
+  <path d="M28 33 q4 -24 32 -24 q28 0 32 24z" fill="#13223F"/><rect x="28" y="27" width="64" height="6" fill="#E2694A"/>
+  <rect x="26" y="128" width="12" height="12" rx="4" fill="#13223F"/><rect x="82" y="128" width="12" height="12" rx="4" fill="#13223F"/>
+</svg>`;
+const GAIVOTA = `<svg class="gull" viewBox="0 0 130 110" role="img" aria-label="Gaivota Larápia, com máscara e cartões-postais">
+  <path d="M30 60 q-28 -30 -24 -50 q22 6 40 34z" fill="#C9D2E2"/>
+  <ellipse cx="64" cy="64" rx="36" ry="28" fill="#fff"/>
+  <path d="M100 60 q26 -34 22 -54 q-24 8 -40 38z" fill="#AEB9CC"/>
+  <circle cx="58" cy="40" r="20" fill="#fff"/>
+  <path d="M38 34 h40 v12 h-40z" fill="#13223F" rx="6"/><circle cx="50" cy="40" r="4" fill="#fff"/><circle cx="66" cy="40" r="4" fill="#fff"/>
+  <circle cx="51" cy="40" r="2" fill="#13223F"/><circle cx="67" cy="40" r="2" fill="#13223F"/>
+  <path d="M76 46 l22 4 l-22 6z" fill="#E9A62C"/>
+  <g transform="rotate(12 92 86)"><rect x="74" y="74" width="34" height="24" rx="3" fill="#F7EEDC" stroke="#E2694A" stroke-width="2"/><path d="M80 82h14M80 88h20" stroke="#E2694A" stroke-width="2"/></g>
+  <path d="M54 92 l-4 12 M70 92 l4 12" stroke="#E9A62C" stroke-width="4" stroke-linecap="round"/>
+</svg>`;
+const ICON = {
+  clock:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',
+  coin:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="#E9A62C"/><circle cx="12" cy="12" r="5.5" fill="none" stroke="#B47A12" stroke-width="2"/></svg>',
+  garcom:'<svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="23" fill="#FCE3D8"/><circle cx="24" cy="19" r="8" fill="#9C5B3B"/><path d="M10 42 q14 -16 28 0z" fill="#13223F"/><path d="M20 30 l4 4 l4 -4z" fill="#fff"/><path d="M33 12 h10 M38 12 v-4" stroke="#13223F" stroke-width="2.5" stroke-linecap="round"/></svg>',
+  taxista:'<svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="23" fill="#FFF0C2"/><circle cx="24" cy="20" r="8" fill="#E1A57A"/><path d="M14 15 q10 -9 20 0 v2 h-20z" fill="#13223F"/><path d="M10 42 q14 -16 28 0z" fill="#E9A62C"/><rect x="18" y="7" width="12" height="5" rx="2" fill="#E9A62C"/></svg>',
+  guia:'<svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="23" fill="#D9F2E9"/><circle cx="24" cy="20" r="8" fill="#C98A5E"/><path d="M15 17 q9 -12 18 0" fill="#3B2A20"/><path d="M10 42 q14 -16 28 0z" fill="#3FB28E"/><path d="M36 26 v-16 l8 4 l-8 4" fill="#E2694A" stroke="#13223F" stroke-width="1.5"/></svg>',
+};
+
+/* ===== utilidades ===== */
+const $ = s => document.querySelector(s);
+const app = $('#app');
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pick = a => a[Math.floor(Math.random() * a.length)];
+const shuffle = a => { const b = [...a]; for (let i = b.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [b[i], b[j]] = [b[j], b[i]]; } return b; };
+const city = id => CIDADES.find(c => c.id === id);
+const store = { get(k, d) { try { const v = localStorage.getItem(k); return v === null ? d : JSON.parse(v); } catch { return d; } }, set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch { /* sem armazenamento */ } } };
+function toast(t) { const el = document.createElement('div'); el.className = 'toast'; el.textContent = t; document.body.append(el); setTimeout(() => el.remove(), 2200); }
+
+/* ===== estado ===== */
+let S = null;
+function novoCaso() {
+  const rota = shuffle(CIDADES.map(c => c.id)).slice(0, JOGO.paradas);
+  S = { rota, idx: 0, horas: JOGO.horas, moedas: 0, erros: 0, pistas: [], opcoes: null, errados: [] };
+}
+const atual = () => city(S.rota[S.idx]);
+const proxima = () => city(S.rota[S.idx + 1]);
+const ehFinal = () => S.idx === S.rota.length - 1;
+function gastar(h) { S.horas = Math.max(0, S.horas - h); if (S.horas <= 0) { fim(false); return false; } return true; }
+
+/* ===== testemunhas e pistas ===== */
+const TESTEMUNHAS = [
+  { id: 'garcom', nome: 'Garçom', tipos: ['comida', 'idioma'] },
+  { id: 'taxista', nome: 'Taxista', tipos: ['moeda', 'bandeira'] },
+  { id: 'guia', nome: 'Guia', tipos: ['monumento', 'extra'] },
+];
+const FRASE = {
+  comida: v => `Ela comeu ${v} e disse que ia provar o mesmo no próximo destino.`,
+  idioma: v => `Ela treinava uma frase para a próxima viagem: ${v}`,
+  moeda: v => `Pediu para trocar o dinheiro todo por ${v}.`,
+  bandeira: v => `Tinha um adesivo de bandeira na asa: ${v}.`,
+  monumento: v => `Disse que queria muito uma foto com ${v}.`,
+  extra: v => `${v} — é para lá que ela vai!`,
+};
+const ESCONDE = {
+  garcom: c => `Ela passou correndo e pediu ${pick(c.comida)} para viagem. Está aqui na cidade, com certeza!`,
+  taxista: c => `Levei uma gaivota de máscara até o cartão-postal mais famoso daqui. Ela queria se esconder lá.`,
+  guia: c => `Ela se escondeu no ponto turístico mais conhecido da cidade. Você sabe qual é?`,
+};
+function pista(wid) {
+  const w = TESTEMUNHAS.find(x => x.id === wid);
+  if (ehFinal()) return ESCONDE[wid](atual());
+  const c = proxima(); let tipo = pick(w.tipos);
+  if (tipo === 'moeda' && c.moeda[0] === 'euros') tipo = 'bandeira'; // euro vale para várias cidades
+  return FRASE[tipo](pick(c[tipo]));
+}
+
+/* ===== desenho das cidades (canvas) ===== */
+function skyline(ctx, id, W, H, base, cor, alpha = 1) {
+  ctx.save(); ctx.globalAlpha = alpha; ctx.fillStyle = cor; ctx.strokeStyle = cor;
+  const g = base, cx = W / 2;
+  const R = (x, y, w, h) => ctx.fillRect(x, y, w, h);
+  const T = (pts) => { ctx.beginPath(); ctx.moveTo(pts[0], pts[1]); for (let i = 2; i < pts.length; i += 2) ctx.lineTo(pts[i], pts[i + 1]); ctx.closePath(); ctx.fill(); };
+  switch (id) {
+    case 'lisboa': // colinas, Torre de Belém e bonde
+      ctx.beginPath(); ctx.moveTo(0, g); ctx.quadraticCurveTo(W * .25, g - 70, W * .5, g - 20); ctx.quadraticCurveTo(W * .75, g - 60, W, g - 10); ctx.lineTo(W, g); ctx.fill();
+      R(cx - 22, g - 120, 44, 100); R(cx - 32, g - 60, 64, 40); for (let i = -2; i <= 2; i++) R(cx + i * 10 - 3, g - 128, 6, 10);
+      R(W * .18, g - 64, 60, 26); ctx.globalAlpha = alpha * .5; R(W * .18 + 6, g - 58, 10, 10); R(W * .18 + 22, g - 58, 10, 10); R(W * .18 + 38, g - 58, 10, 10); break;
+    case 'paris': // Torre Eiffel e telhados
+      for (let i = 0; i < W; i += 46) R(i, g - 30 - (i % 3) * 8, 40, 30 + (i % 3) * 8);
+      T([cx, g - 170, cx + 46, g, cx + 30, g, cx, g - 60, cx - 30, g, cx - 46, g]); R(cx - 26, g - 70, 52, 6); R(cx - 14, g - 120, 28, 5); break;
+    case 'roma': // Coliseu
+      ctx.beginPath(); ctx.ellipse(cx, g - 50, 130, 60, 0, Math.PI, 0); ctx.lineTo(cx + 130, g); ctx.lineTo(cx - 130, g); ctx.fill();
+      ctx.globalCompositeOperation = 'destination-out';
+      for (let r = 0; r < 3; r++) for (let i = -5; i <= 5; i++) { ctx.beginPath(); ctx.ellipse(cx + i * 22, g - 20 - r * 30, 6, 10, 0, 0, Math.PI * 2); ctx.fill(); }
+      ctx.globalCompositeOperation = 'source-over'; break;
+    case 'barcelona': // torres da basílica
+      [[-60, 110], [-30, 150], [0, 175], [30, 150], [60, 110]].forEach(([dx, h]) => { T([cx + dx - 12, g, cx + dx + 12, g, cx + dx + 6, g - h, cx + dx, g - h - 18, cx + dx - 6, g - h]); });
+      R(cx - 80, g - 40, 160, 40); break;
+    case 'londres': // Big Ben e ônibus
+      R(cx - 18, g - 150, 36, 150); T([cx - 22, g - 150, cx + 22, g - 150, cx, g - 190]);
+      ctx.globalCompositeOperation = 'destination-out'; ctx.beginPath(); ctx.arc(cx, g - 122, 11, 0, 7); ctx.fill(); ctx.globalCompositeOperation = 'source-over';
+      R(W * .62, g - 52, 96, 48); ctx.beginPath(); ctx.arc(W * .62 + 20, g - 4, 8, 0, 7); ctx.arc(W * .62 + 76, g - 4, 8, 0, 7); ctx.fill(); break;
+    case 'novayork': // arranha-céus e a estátua
+      [[.08, 120], [.16, 170], [.26, 95], [.34, 140], [.66, 150], [.74, 105], [.84, 185], [.92, 125]].forEach(([x, h]) => R(W * x, g - h, W * .07, h));
+      R(cx - 10, g - 70, 20, 70); R(cx - 4, g - 120, 8, 52); R(cx + 4, g - 150, 5, 34); T([cx - 12, g - 128, cx + 12, g - 128, cx, g - 142]); break;
+    case 'buenosaires': // Obelisco e casinhas
+      T([cx - 16, g, cx + 16, g, cx + 10, g - 160, cx, g - 178, cx - 10, g - 160]);
+      for (let i = 0; i < 5; i++) { R(W * .06 + i * 40, g - 44 - (i % 2) * 12, 34, 44 + (i % 2) * 12); R(W * .66 + i * 40, g - 36 - (i % 2) * 14, 34, 36 + (i % 2) * 14); } break;
+    case 'cusco': // montanhas e ruínas
+      T([0, g, W * .2, g - 120, W * .38, g - 60, W * .55, g - 170, W * .72, g - 80, W * .86, g - 110, W, g]);
+      ctx.globalAlpha = alpha * .55; for (let i = 0; i < 6; i++) R(W * .3 + i * 22, g - 28 - (i % 2) * 8, 18, 28 + (i % 2) * 8); break;
+    case 'toquio': // monte Fuji e torre
+      ctx.globalAlpha = alpha * .55; T([W * .05, g, W * .3, g - 120, W * .55, g]); ctx.globalAlpha = alpha;
+      T([cx + 40, g, cx + 84, g, cx + 66, g - 120, cx + 62, g - 168, cx + 58, g - 120]); R(cx + 48, g - 60, 28, 6); R(cx + 54, g - 110, 16, 5);
+      for (let i = 0; i < 4; i++) R(W * .72 + i * 34, g - 50 - i * 18, 28, 50 + i * 18); break;
+    case 'cairo': // pirâmides
+      T([W * .12, g, W * .34, g - 120, W * .56, g]); T([W * .42, g, W * .62, g - 150, W * .82, g]); ctx.globalAlpha = alpha * .6; T([W * .74, g, W * .86, g - 70, W * .98, g]); break;
+  }
+  ctx.globalAlpha = alpha; R(0, g, W, H - g); ctx.restore();
+}
+function cityBanner(c) {
+  const cv = document.createElement('canvas'); const W = 640, H = 260; cv.width = W; cv.height = H; cv.className = 'banner';
+  cv.setAttribute('role', 'img'); cv.setAttribute('aria-label', `Silhueta de ${c.nome}`);
+  const x = cv.getContext('2d'); const gr = x.createLinearGradient(0, 0, 0, H); gr.addColorStop(0, '#1E3A6E'); gr.addColorStop(1, c.cor); x.fillStyle = gr; x.fillRect(0, 0, W, H);
+  x.fillStyle = 'rgba(255,255,255,.7)'; for (let i = 0; i < 26; i++) { x.fillRect((i * 97) % W, (i * 53) % 110, 2, 2); }
+  x.fillStyle = '#F7EEDC'; x.beginPath(); x.arc(W * .84, 54, 22, 0, 7); x.fill();
+  skyline(x, c.id, W, H, H - 30, 'rgba(14,26,51,.88)');
+  return cv;
+}
+
+/* ===== telas ===== */
+function hud() {
+  const low = S.horas <= 16;
+  return `<div class="hud"><span class="brand">Missão Passaporte</span>
+    <span style="display:flex;gap:8px"><span class="chip${low ? ' low' : ''}" title="Horas restantes">${ICON.clock}${S.horas} h</span><span class="chip" title="Moedas">${ICON.coin}${S.moedas}</span></span></div>
+    <div class="hud"><span class="stamps" aria-label="Postais recuperados: ${S.idx} de ${S.rota.length - 1}">${S.rota.slice(1).map((_, i) => `<i class="${i < S.idx ? 'on' : ''}"></i>`).join('')}</span>
+    <span style="font-size:13px;color:#AEB8CE">${S.idx} de ${S.rota.length - 1} postais</span></div>`;
+}
+
+function telaInicio() {
+  const best = store.get('mp-recorde', 0);
+  app.innerHTML = `<section class="hero">
+    <div class="cast">${MALINHA}${GAIVOTA}</div>
+    <h1>Missão<span>Passaporte</span></h1>
+    <p>A Gaivota Larápia roubou os cartões-postais mais famosos do mundo. Siga as pistas, voe atrás dela e recupere tudo antes que o tempo acabe.</p>
+    <button class="btn" id="go">Começar missão</button>
+    <div class="how"><div><b>1</b>Ouça as testemunhas em cada cidade</div><div><b>2</b>Escolha o próximo destino no cartão de embarque</div><div><b>3</b>Corra pelo aeroporto pegando moedas</div></div>
+    ${best ? `<p class="best">Seu recorde: ${best} pontos</p>` : ''}
+    <p class="foot">Um jogo da <a href="${JOGO.site}" target="_blank" rel="noopener">Via Singularis Travel</a></p>
+  </section>`;
+  $('#go').onclick = () => { novoCaso(); telaBriefing(); };
+}
+
+function telaBriefing() {
+  const c = atual();
+  app.innerHTML = `${hud()}<section class="card msg">
+    <span class="eyebrow">Caso aberto</span><h2>Alerta em ${esc(c.nome)}!</h2>
+    <p>A Gaivota Larápia foi vista em <b>${esc(c.nome)}, ${esc(c.pais)}</b> com uma pilha de cartões-postais roubados. Ela vai passar por ${S.rota.length - 1} cidades até se esconder.</p>
+    <p class="sub">Você tem <b>${S.horas} horas</b>. Cada testemunha custa ${JOGO.custoPista} h e cada voo, ${JOGO.custoVoo} h. Voo errado custa ${JOGO.custoErro} h.</p>
+    <button class="btn dark" id="go">Investigar</button></section>`;
+  $('#go').onclick = telaCidade;
+}
+
+function telaCidade() {
+  const c = atual(), final = ehFinal();
+  app.innerHTML = `${hud()}<section class="card" style="display:flex;flex-direction:column;gap:14px">
+    <div class="city-h"><div><span class="eyebrow">${final ? 'Última parada' : `Parada ${S.idx + 1}`}</span><h2>${esc(c.nome)}</h2></div><span class="sub">${esc(c.pais)}</span></div>
+    <div id="bn"></div>
+    <p class="fact"><b>Você sabia?</b> ${esc(c.fato)}</p>
+    <h3>${final ? 'A Gaivota está escondida nesta cidade. Pergunte por aí:' : 'Para onde a Gaivota foi? Pergunte às testemunhas:'}</h3>
+    <div class="wits">${TESTEMUNHAS.map(w => `<button class="wit" data-w="${w.id}"${S.pistas.some(p => p.w === w.id) ? ' disabled' : ''}>${ICON[w.id]}${w.nome}<small>−${JOGO.custoPista} h</small></button>`).join('')}</div>
+    <div class="notes">${S.pistas.map(p => `<div class="note"><b>${esc(p.nome)}</b>${esc(p.t)}</div>`).join('')}</div>
+    <button class="btn" id="go">${final ? 'Descobrir o esconderijo' : 'Escolher o próximo destino'}</button></section>`;
+  $('#bn').append(cityBanner(c));
+  app.querySelectorAll('.wit').forEach(b => b.onclick = () => {
+    if (!gastar(JOGO.custoPista)) return;
+    const w = TESTEMUNHAS.find(x => x.id === b.dataset.w);
+    S.pistas.push({ w: w.id, nome: w.nome, t: pista(w.id) });
+    telaCidade();
+  });
+  $('#go').onclick = final ? telaEsconderijo : telaDestinos;
+}
+
+function telaDestinos() {
+  const certa = proxima();
+  if (!S.opcoes) S.opcoes = shuffle([certa.id, ...shuffle(CIDADES.filter(c => c.id !== certa.id && c.id !== atual().id).map(c => c.id)).slice(0, 3)]);
+  app.innerHTML = `${hud()}<section class="card" style="display:flex;flex-direction:column;gap:14px">
+    <span class="eyebrow">Portão de embarque</span><h2>Escolha o voo</h2>
+    <p class="sub">Confira as pistas e embarque para onde a Gaivota foi.</p>
+    ${S.pistas.length ? `<div class="notes">${S.pistas.map(p => `<div class="note"><b>${esc(p.nome)}</b>${esc(p.t)}</div>`).join('')}</div>` : ''}
+    <div class="passes">${S.opcoes.map((id, i) => { const c = city(id); return `<button class="pass" style="--c:${c.cor}" data-c="${id}"${S.errados.includes(id) ? ' disabled style="opacity:.45"' : ''}><small>Voo VS ${String(101 + i * 37)}</small><b>${esc(c.nome)}</b><span>${esc(c.pais)}</span><em>${JOGO.custoVoo}h</em></button>`; }).join('')}</div>
+    <button class="btn ghost" id="back" style="color:var(--ink);box-shadow:inset 0 0 0 2px var(--line)">Voltar e ouvir mais testemunhas</button></section>`;
+  app.querySelectorAll('.pass').forEach(b => b.onclick = () => embarcar(b.dataset.c));
+  $('#back').onclick = telaCidade;
+}
+
+function embarcar(id) {
+  if (id !== proxima().id) {
+    S.erros++; S.errados.push(id);
+    if (!gastar(JOGO.custoErro)) return;
+    const c = city(id);
+    app.innerHTML = `${hud()}<section class="card msg"><span class="eyebrow">Pista fria</span><h2>Ninguém viu a Gaivota em ${esc(c.nome)}</h2>
+      <p>Você perdeu ${JOGO.custoErro} horas indo e voltando. Ela continua escondida em algum lugar a partir de <b>${esc(atual().nome)}</b>.</p>
+      <button class="btn dark" id="go">Voltar ao portão</button></section>`;
+    $('#go').onclick = telaDestinos; return;
+  }
+  if (!gastar(JOGO.custoVoo)) return;
+  telaCorrida(proxima());
+}
+
+function telaEsconderijo() {
+  const c = atual();
+  if (!S.opcoes) S.opcoes = shuffle([c.id, ...shuffle(CIDADES.filter(x => x.id !== c.id).map(x => x.id)).slice(0, 3)]);
+  app.innerHTML = `${hud()}<section class="card" style="display:flex;flex-direction:column;gap:14px">
+    <span class="eyebrow">Flagrante</span><h2>Onde a Gaivota se escondeu?</h2>
+    <p class="sub">Ela está no cartão-postal mais famoso de ${esc(c.nome)}. Chute errado custa ${JOGO.custoChute} h.</p>
+    <div class="passes">${S.opcoes.map(id => { const x = city(id); return `<button class="pass spot" style="--c:${c.cor}" data-c="${id}"><small>Esconderijo</small><b style="font-size:17px">${esc(x.monumento[0][0].toUpperCase() + x.monumento[0].slice(1))}</b></button>`; }).join('')}</div></section>`;
+  app.querySelectorAll('.pass').forEach(b => b.onclick = () => {
+    if (b.dataset.c === c.id) return fim(true);
+    S.erros++; b.disabled = true; b.style.opacity = .45;
+    if (!gastar(JOGO.custoChute)) return;
+    toast('Não está aí! Tente outro lugar.'); app.querySelector('.chip').innerHTML = ICON.clock + S.horas + ' h';
+  });
+}
+
+/* ===== corridinha (canvas) ===== */
+let loop = null;
+if (!CanvasRenderingContext2D.prototype.roundRect) CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h) { this.rect(x, y, w, h); };
+function telaCorrida(dest) {
+  app.innerHTML = `${hud()}<section style="display:flex;flex-direction:column;gap:10px">
+    <div class="runwrap"><canvas id="run" width="480" height="300" aria-label="Corrida pelo aeroporto: toque ou aperte espaço para pular"></canvas>
+    <div class="runhud"><span>Rumo a ${esc(dest.nome)}</span><span id="rt"></span></div></div>
+    <p class="tip">Toque na tela ou aperte <b>espaço</b> para pular os obstáculos e pegar moedas.</p>
+    <button class="btn ghost" id="skip">Pular corrida</button></section>`;
+  const cv = $('#run'), x = cv.getContext('2d'), W = 480, H = 300, G = 250;
+  const DUR = 16000; let t0 = null, last = 0, coins = 0, hits = 0, inv = 0;
+  const p = { x: 70, y: G, vy: 0, w: 46, h: 54 };
+  const items = []; let spawn = 0, speed = 300, bgX = 0, done = false;
+  const jump = () => { if (p.y >= G - .5) { p.vy = -760; } };
+  const key = e => { if (e.code === 'Space' || e.code === 'ArrowUp') { e.preventDefault(); jump(); } };
+  cv.addEventListener('pointerdown', e => { e.preventDefault(); jump(); });
+  addEventListener('keydown', key);
+  const end = () => {
+    if (done) return; done = true; cancelAnimationFrame(loop); removeEventListener('keydown', key);
+    S.moedas += coins; S.horas = Math.max(1, S.horas - hits); S.idx++; S.pistas = []; S.opcoes = null; S.errados = [];
+    telaChegada(coins, hits);
+  };
+  $('#skip').onclick = end;
+  function drawP() {
+    if (inv > 0 && Math.floor(inv / 80) % 2) return;
+    const bx = p.x, by = p.y - p.h;
+    x.fillStyle = '#7A4A0C'; x.fillRect(bx + 15, by - 8, 16, 4); x.fillRect(bx + 15, by - 8, 4, 10); x.fillRect(bx + 27, by - 8, 4, 10);
+    x.fillStyle = '#E9A62C'; x.beginPath(); x.roundRect(bx, by, p.w, p.h - 6, 10); x.fill();
+    x.fillStyle = '#fff'; x.beginPath(); x.arc(bx + 17, by + 20, 6, 0, 7); x.arc(bx + 31, by + 20, 6, 0, 7); x.fill();
+    x.fillStyle = '#13223F'; x.beginPath(); x.arc(bx + 19, by + 21, 3, 0, 7); x.arc(bx + 33, by + 21, 3, 0, 7); x.fill();
+    x.fillRect(bx - 4, by - 2, p.w + 8, 5); x.fillRect(bx + 8, by - 12, p.w - 16, 11);
+    const leg = (performance.now() / 90) % 2 < 1 && p.y >= G - .5;
+    x.fillRect(bx + 8, by + p.h - 6, 9, leg ? 6 : 3); x.fillRect(bx + p.w - 17, by + p.h - 6, 9, leg ? 3 : 6);
+  }
+  function frame(ts) {
+    if (!t0) { t0 = ts; last = ts; }
+    const dt = Math.min(40, ts - last) / 1000; last = ts; const el = ts - t0;
+    speed = 300 + el / 60; bgX = (bgX + speed * dt * .25) % W;
+    p.vy += 2100 * dt; p.y = Math.min(G, p.y + p.vy * dt); if (p.y >= G) p.vy = 0;
+    if (inv > 0) inv -= dt * 1000;
+    spawn -= dt * 1000;
+    if (spawn <= 0 && el < DUR - 1200) {
+      const r = Math.random();
+      if (r < .42) items.push({ k: 'cone', x: W + 20, y: G, w: 26, h: 34 });
+      else if (r < .58) items.push({ k: 'cart', x: W + 20, y: G, w: 46, h: 30 });
+      else { const hgt = Math.random() < .5 ? 0 : 70; for (let i = 0; i < 3; i++) items.push({ k: 'coin', x: W + 20 + i * 34, y: G - 30 - hgt, w: 20, h: 20 }); }
+      spawn = 700 + Math.random() * 650;
+    }
+    // fundo
+    const gr = x.createLinearGradient(0, 0, 0, H); gr.addColorStop(0, '#1E3A6E'); gr.addColorStop(1, dest.cor); x.fillStyle = gr; x.fillRect(0, 0, W, H);
+    x.save(); x.translate(-bgX, 0); skyline(x, dest.id, W, H, G, 'rgba(14,26,51,.55)', 1); x.translate(W, 0); skyline(x, dest.id, W, H, G, 'rgba(14,26,51,.55)', 1); x.restore();
+    x.fillStyle = '#0E1A33'; x.fillRect(0, G, W, H - G); x.fillStyle = 'rgba(247,238,220,.35)';
+    for (let i = -((el * speed / 1000) % 60); i < W; i += 60) x.fillRect(i, G + 22, 30, 4);
+    // itens
+    for (const it of items) {
+      it.x -= speed * dt;
+      if (it.k === 'coin') { x.fillStyle = '#E9A62C'; x.beginPath(); x.arc(it.x + 10, it.y - 10, 10, 0, 7); x.fill(); x.strokeStyle = '#B47A12'; x.lineWidth = 2.5; x.beginPath(); x.arc(it.x + 10, it.y - 10, 5.5, 0, 7); x.stroke(); }
+      else if (it.k === 'cone') { x.fillStyle = '#E2694A'; x.beginPath(); x.moveTo(it.x, it.y); x.lineTo(it.x + it.w / 2, it.y - it.h); x.lineTo(it.x + it.w, it.y); x.fill(); x.fillStyle = '#F7EEDC'; x.fillRect(it.x + 6, it.y - 18, it.w - 12, 5); }
+      else { x.fillStyle = '#9AA6BD'; x.fillRect(it.x, it.y - it.h, it.w, 6); x.fillRect(it.x + 4, it.y - it.h, 4, it.h - 6); x.fillStyle = '#3FB28E'; x.fillRect(it.x + 10, it.y - it.h - 20, 30, 20); x.fillStyle = '#9AA6BD'; x.beginPath(); x.arc(it.x + 10, it.y - 3, 4, 0, 7); x.arc(it.x + 38, it.y - 3, 4, 0, 7); x.fill(); }
+      const hitX = it.x < p.x + p.w - 8 && it.x + it.w > p.x + 8, top = p.y - p.h + 6;
+      if (it.k === 'coin' && !it.got && hitX && it.y > top && it.y - it.h < p.y) { it.got = true; coins++; }
+      if (it.k !== 'coin' && !it.hit && hitX && p.y > it.y - it.h + 6 && inv <= 0) { it.hit = true; hits++; inv = 900; }
+    }
+    for (let i = items.length - 1; i >= 0; i--) if (items[i].x < -60 || items[i].got) items.splice(i, 1);
+    drawP();
+    const rt = $('#rt'); if (rt) rt.textContent = `${coins} moedas · ${Math.max(0, Math.ceil((DUR - el) / 1000))} s`;
+    if (el >= DUR) return end();
+    loop = requestAnimationFrame(frame);
+  }
+  loop = requestAnimationFrame(frame);
+}
+
+function telaChegada(coins, hits) {
+  const c = atual();
+  app.innerHTML = `${hud()}<section class="card msg"><span class="eyebrow">Postal recuperado</span><h2>Pousou em ${esc(c.nome)}!</h2>
+    <p>Você achou mais um cartão-postal largado pela Gaivota${coins ? ` e pegou <b>${coins} moedas</b> no caminho` : ''}.${hits ? ` Os tropeços custaram ${hits} h.` : ''}</p>
+    <button class="btn dark" id="go">${ehFinal() ? 'Ela está por perto. Investigar!' : 'Continuar investigando'}</button></section>`;
+  $('#go').onclick = telaCidade;
+}
+
+/* ===== final ===== */
+function fim(venceu) {
+  cancelAnimationFrame(loop);
+  const postais = venceu ? S.rota.length - 1 : S.idx;
+  const pts = venceu ? { horas: S.horas * 10, moedas: S.moedas * 5, bonus: S.erros === 0 ? 200 : 0 } : { horas: 0, moedas: S.moedas * 5, bonus: postais * 40 };
+  const total = pts.horas + pts.moedas + pts.bonus;
+  const rank = !venceu ? 'Turista distraído' : total >= 900 ? 'Agente Ouro' : total >= 600 ? 'Detetive Viajante' : 'Estagiário de Bordo';
+  const best = store.get('mp-recorde', 0); const recorde = total > best; if (recorde) store.set('mp-recorde', total);
+  const texto = venceu ? `Peguei a Gaivota Larápia e recuperei ${postais} cartões-postais! Fiz ${total} pontos na Missão Passaporte. Consegue me superar?` : `A Gaivota Larápia escapou de mim depois de ${postais} cidades. Fiz ${total} pontos na Missão Passaporte. Tenta você!`;
+  const share = `${texto} ${JOGO.compartilhar}`;
+  app.innerHTML = `<section class="card msg">
+    <div class="cast" style="margin:0">${venceu ? MALINHA : GAIVOTA}</div>
+    <span class="eyebrow">${venceu ? 'Missão cumprida' : 'Tempo esgotado'}</span>
+    <h2>${venceu ? 'Gaivota capturada!' : 'A Gaivota escapou!'}</h2>
+    <span class="rank">${rank}</span>
+    <div class="score">${venceu ? `<span>Horas de sobra (${S.horas} h × 10)</span><span>${pts.horas}</span>` : ''}<span>Moedas (${S.moedas} × 5)</span><span>${pts.moedas}</span>
+      <span>${venceu ? 'Bônus sem errar nenhum voo' : `Postais recuperados (${postais} × 40)`}</span><span>${pts.bonus}</span>
+      <span class="tot">Total</span><span class="tot">${total}</span></div>
+    ${recorde ? '<p><b>Novo recorde!</b></p>' : best ? `<p class="sub">Seu recorde: ${best}</p>` : ''}
+    <div class="row" style="width:100%"><button class="btn" id="share">Compartilhar</button><a class="btn dark" href="https://wa.me/?text=${encodeURIComponent(share)}" target="_blank" rel="noopener" style="text-decoration:none">Enviar no WhatsApp</a></div>
+    <button class="btn ghost" id="again" style="color:var(--ink);box-shadow:inset 0 0 0 2px var(--line)">Jogar de novo</button>
+  </section>
+  <p class="foot">Gostou de viajar pelo mundo? <a href="${JOGO.site}" target="_blank" rel="noopener">Conheça as viagens da Via Singularis Travel</a></p>`;
+  $('#again').onclick = () => { novoCaso(); telaBriefing(); };
+  $('#share').onclick = async () => {
+    try { if (navigator.share) { await navigator.share({ title: 'Missão Passaporte', text: texto, url: JOGO.compartilhar }); return; } } catch (e) { if (e && e.name === 'AbortError') return; }
+    try { await navigator.clipboard.writeText(share); toast('Texto copiado! Cole onde quiser.'); }
+    catch { toast('Use o botão do WhatsApp para compartilhar.'); }
+  };
+}
+
+telaInicio();
+</script>
+
+</body>
+</html>
