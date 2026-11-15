@@ -112,6 +112,7 @@ function renderBlock(b, day) {
 
 Object.assign(P, {
   file:'<path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><path d="M14 2v6h6M8 13h8M8 17h5"/>',
+  game:'<rect x="2" y="6" width="20" height="12" rx="6"/><path d="M6 12h4M8 10v4M15 11h.01M18 13h.01"/>',
   ticket:'<path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"/><path d="M13 5v2M13 17v2M13 11v2"/>',
   lock:'<rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
   down:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/>',
@@ -343,6 +344,13 @@ function viewVouchers() {
     ${footer()}</div>`;
 }
 
+/* ---------- jogo Missão Passaporte (pasta jogo/ do mesmo site) ---------- */
+function viewGame() {
+  setAccent(null);
+  document.title = 'Jogar · ' + T.title;
+  return `<div class="gamewrap"><iframe src="jogo/" title="Missão Passaporte, jogo de viagem" allow="fullscreen"></iframe></div>`;
+}
+
 let lastBlobURL = null;
 function viewVoucher(id) {
   const v = (TRIP?.vouchers || []).find(x => x.id === id);
@@ -385,7 +393,7 @@ function footer() {
 }
 
 /* ---------- roteamento ---------- */
-const TABS = [['#/', 'Hoje', 'home'], ['#/dias', 'Dias', 'cal'], ['#/trajetos', 'Trajetos', 'bus'], ['#/hospedagens', 'Estadia', 'bed'], ['#/vouchers', 'Vouchers', 'ticket']];
+const TABS = [['#/', 'Hoje', 'home'], ['#/dias', 'Dias', 'cal'], ['#/trajetos', 'Trajetos', 'bus'], ['#/hospedagens', 'Estadia', 'bed'], ['#/vouchers', 'Vouchers', 'ticket'], ['#/jogar', 'Jogar', 'game']];
 /* ---------- proteção: marca d'água com o nome do cliente ---------- */
 function setWatermark(name) {
   let el = document.getElementById('wm');
@@ -401,14 +409,18 @@ function setWatermark(name) {
 
 function route() {
   if (!T) return;
-  setWatermark(TRIP?.client_name ? 'Roteiro exclusivo de ' + TRIP.client_name : '');
   const h = location.hash || '#/';
+  const jogo = h.startsWith('#/jogar');
+  // no jogo não há marca d'água, e a partida não reinicia quando o roteiro é atualizado
+  setWatermark(!jogo && TRIP?.client_name ? 'Roteiro exclusivo de ' + TRIP.client_name : '');
+  if (jogo && document.querySelector('#app .gamewrap')) return;
   let html, tab = '#/', m;
   if ((m = h.match(/^#\/dia\/(\d+)/))) { html = viewDay(+m[1]); tab = (todayDay()?.n === +m[1]) ? '#/' : '#/dias'; }
   else if ((m = h.match(/^#\/voucher\/(.+)/))) { html = viewVoucher(decodeURIComponent(m[1])); tab = '#/vouchers'; }
   else if (h.startsWith('#/dias')) { html = viewDays(); tab = '#/dias'; }
   else if (h.startsWith('#/trajetos')) { html = viewTransfers(); tab = '#/trajetos'; }
   else if (h.startsWith('#/hospedagens')) { html = viewStays(); tab = '#/hospedagens'; }
+  else if (jogo) { html = viewGame(); tab = '#/jogar'; }
   else if (h.startsWith('#/vouchers') || h.startsWith('#/reservas')) { html = viewVouchers(); tab = '#/vouchers'; }
   else html = viewHome();
   const y = window.scrollY, same = route.last === h;
