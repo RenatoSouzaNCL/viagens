@@ -1,0 +1,19 @@
+# Mantém o Supabase do plano gratuito acordado (ele pausa após ~7 dias sem uso).
+# Duas vezes por semana faz uma consulta leve ao ranking do jogo.
+name: Manter Supabase ativo
+
+on:
+  schedule:
+    - cron: '17 12 * * 1,4'   # segundas e quintas, 09:17 em Brasília
+  workflow_dispatch:           # botão "Run workflow" para rodar na hora
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Consulta leve ao banco
+        run: |
+          curl -sS -f -X POST "https://uznjtjqtcujbidncukbo.supabase.co/rest/v1/rpc/jogo_top" \
+            -H "apikey: sb_publishable_6XxN2qU84tRtrwGYBzRHHA_s3P16jAV" \
+            -H "Content-Type: application/json" \
+            -d '{"p_nivel":"facil"}'
