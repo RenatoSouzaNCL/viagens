@@ -348,6 +348,7 @@ function viewVouchers() {
 function viewGame() {
   setAccent(null);
   document.title = 'Jogar · ' + T.title;
+  window.vsJogador = TRIP?.client_name || ''; // o jogo preenche o nome do cliente no ranking
   return `<div class="gamewrap"><iframe src="jogo/" title="Missão Passaporte, jogo de viagem" allow="fullscreen"></iframe></div>`;
 }
 
