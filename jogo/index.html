@@ -108,6 +108,24 @@ p{margin:0}
 .rank{display:inline-block;background:var(--ink);color:var(--amber);font-family:var(--display);font-weight:800;padding:8px 14px;border-radius:999px;transform:rotate(-2deg)}
 .foot{text-align:center;font-size:13px;color:#AEB8CE}
 .foot a{color:var(--amber)}
+.rkbox{width:100%;text-align:left;background:#fff;border-radius:16px;padding:12px;box-shadow:0 2px 0 var(--line)}
+.rkbox label{display:block;font-weight:800;font-size:14px;margin-bottom:6px}
+.rkbox .row{flex-wrap:nowrap}
+.rkbox input{flex:1 1 auto;min-width:0;border:2px solid var(--line);border-radius:12px;padding:10px 12px;font:inherit;font-size:16px;color:var(--ink);background:var(--paper)}
+.rkbox input:focus{outline:none;border-color:var(--amber)}
+.rkbox .btn{flex:0 0 auto;width:auto;padding:10px 16px;font-size:15px}
+.rkbox small{display:block;margin-top:6px;color:var(--muted);font-size:12px}
+.tabs3{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;width:100%;background:var(--paper2);padding:4px;border-radius:14px}
+.tabs3 button{border:0;border-radius:10px;padding:9px 4px;font:inherit;font-weight:800;font-size:14px;background:transparent;color:var(--muted)}
+.tabs3 button.on{background:#fff;color:var(--ink);box-shadow:0 1px 0 var(--line)}
+.rk{list-style:none;margin:0;padding:0;width:100%;text-align:left}
+.rk li{display:grid;grid-template-columns:38px 1fr auto;align-items:center;gap:8px;padding:10px 6px;border-bottom:1px solid var(--line);font-size:15px}
+.rk li b{font-family:var(--display);color:var(--muted)}
+.rk li:nth-child(-n+3) b{color:var(--coral)}
+.rk li em{font-style:normal;font-weight:800;font-variant-numeric:tabular-nums}
+.rk li.me{background:#FFF4DC;border-radius:10px}
+.rk li.gap{display:block;text-align:center;color:var(--muted);padding:2px;border:0}
+.rk li.info{display:block;text-align:center;color:var(--muted);border:0}
 .toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--paper);color:var(--ink);font-weight:700;padding:10px 16px;border-radius:12px;z-index:9;box-shadow:0 8px 24px rgba(0,0,0,.35)}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 @media (max-width:420px){.levels{grid-template-columns:1fr}.lvl{flex-direction:row;align-items:baseline;gap:10px}.photo img{height:200px}.how{grid-template-columns:1fr}.passes{grid-template-columns:1fr}.cast svg{height:120px}.cast .gull{height:88px}}
@@ -172,6 +190,9 @@ const JOGO = {
   horas: 96, paradas: 5,                         // horas iniciais e cidades por caso
   custoPista: 2, custoVoo: 6, custoErro: 10, custoChute: 6,
 };
+
+/* ===== ranking (Supabase da agência; a chave publicável pode ficar no código) ===== */
+const RANK = { url: 'https://uznjtjqtcujbidncukbo.supabase.co', key: 'sb_publishable_6XxN2qU84tRtrwGYBzRHHA_s3P16jAV' };
 
 /* ===== níveis de dificuldade ===== */
 const NIVEIS = {
@@ -354,6 +375,43 @@ function cityBanner(c) {
   return cv;
 }
 
+/* ===== ranking ===== */
+function jogadorId() {
+  let id = store.get('mp-jogador', null);
+  if (!id) {
+    id = (crypto.randomUUID && crypto.randomUUID()) || 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => { const r = Math.random() * 16 | 0; return (c === 'x' ? r : (r & 3 | 8)).toString(16); });
+    store.set('mp-jogador', id);
+  }
+  return id;
+}
+// Dentro do app de roteiros, o nome do cliente vem preenchido.
+function nomeDoApp() { try { if (window.parent !== window && window.parent.vsJogador) return String(window.parent.vsJogador); } catch { /* site de outro domínio */ } return ''; }
+function origem() { return nomeDoApp() ? 'app' : (window.parent !== window ? 'site' : 'web'); }
+async function rpc(fn, body) {
+  const r = await fetch(RANK.url + '/rest/v1/rpc/' + fn, { method: 'POST', headers: { apikey: RANK.key, 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+  if (!r.ok) throw new Error('HTTP ' + r.status);
+  const t = await r.text(); return t ? JSON.parse(t) : null;
+}
+async function telaRanking(nv = NIVEL) {
+  app.innerHTML = `<section class="card msg">
+    <span class="eyebrow">Ranking</span><h2>Melhores detetives</h2>
+    <div class="tabs3" role="tablist">${Object.entries(NIVEIS).map(([k, n]) => `<button role="tab" aria-selected="${k === nv}" class="${k === nv ? 'on' : ''}" data-n="${k}">${n.nome}</button>`).join('')}</div>
+    <ol class="rk" id="rk"><li class="info">Carregando…</li></ol>
+    <p class="sub" style="font-size:13px;margin:0">Para proteger a privacidade, os nomes aparecem pela metade.</p>
+    <button class="btn" id="voltar">Voltar</button>
+  </section>`;
+  app.querySelectorAll('.tabs3 button').forEach(b => b.onclick = () => telaRanking(b.dataset.n));
+  $('#voltar').onclick = telaInicio;
+  const el = $('#rk');
+  try {
+    const rows = await rpc('jogo_top', { p_nivel: nv, p_jogador: jogadorId() }) || [];
+    if (!el.isConnected) return;
+    if (!rows.length) { el.innerHTML = '<li class="info">Ninguém pontuou neste nível ainda. Seja o primeiro!</li>'; return; }
+    el.innerHTML = rows.map(r => (r.posicao > 10 ? '<li class="gap">⋯</li>' : '') +
+      `<li class="${r.voce ? 'me' : ''}"><b>${r.posicao}º</b><span>${esc(r.nome)}${r.voce ? ' <small>(você)</small>' : ''}</span><em>${r.pontos}</em></li>`).join('');
+  } catch { if (el.isConnected) el.innerHTML = '<li class="info">Não deu para carregar o ranking agora. Confira a internet e tente de novo.</li>'; }
+}
+
 /* ===== telas ===== */
 function hud() {
   const low = S.horas <= 16;
@@ -372,11 +430,13 @@ function telaInicio() {
     <p>A Gaivota Larápia roubou os cartões-postais mais famosos do mundo. Siga as pistas, voe atrás dela e recupere tudo antes que o tempo acabe.</p>
     <div class="levels" role="radiogroup" aria-label="Dificuldade">${Object.entries(NIVEIS).map(([k, n]) => `<button class="lvl${k === NIVEL ? ' on' : ''}" role="radio" aria-checked="${k === NIVEL}" data-n="${k}"><b>${n.nome}</b><small>${n.desc}</small></button>`).join('')}</div>
     <button class="btn" id="go">Começar missão · ${NIVEIS[NIVEL].nome}</button>
+    <button class="btn ghost" id="verrank">Ver ranking</button>
     <div class="how"><div><b>1</b>Ouça as testemunhas em cada cidade</div><div><b>2</b>Escolha o próximo destino no cartão de embarque</div><div><b>3</b>Corra pelo aeroporto pegando moedas</div></div>
     ${best ? `<p class="best">Seu recorde no ${NIVEIS[NIVEL].nome}: ${best} pontos</p>` : ''}
     <p class="foot">Um jogo da <a href="${JOGO.site}" target="_blank" rel="noopener">Via Singularis Travel</a></p>
   </section>`;
   $('#go').onclick = () => { novoCaso(); telaBriefing(); };
+  $('#verrank').onclick = () => telaRanking(NIVEL);
   app.querySelectorAll('.lvl').forEach(b => b.onclick = () => { store.set('mp-nivel', b.dataset.n); telaInicio(); });
 }
 
@@ -556,11 +616,23 @@ function fim(venceu) {
       ${N.mult !== 1 ? `<span>Nível ${N.nome} (× ${String(N.mult).replace('.', ',')})</span><span>${total - base >= 0 ? '+' : ''}${total - base}</span>` : ''}
       <span class="tot">Total</span><span class="tot">${total}</span></div>
     ${recorde ? '<p><b>Novo recorde!</b></p>' : best ? `<p class="sub">Seu recorde: ${best}</p>` : ''}
+    ${total > 0 ? `<div class="rkbox"><label for="rknome">Coloque seu nome no ranking</label>
+      <div class="row"><input id="rknome" maxlength="40" autocomplete="name" placeholder="Seu nome" value="${esc(nomeDoApp() || store.get('mp-nome', ''))}"><button class="btn" id="rksave">Salvar</button></div>
+      <small>No ranking aparece só metade: por exemplo, Beat*** Pere***</small></div>` : ''}
     <div class="row" style="width:100%"><button class="btn" id="share">Compartilhar</button><a class="btn dark" href="https://wa.me/?text=${encodeURIComponent(share)}" target="_blank" rel="noopener" style="text-decoration:none">Enviar no WhatsApp</a></div>
     <button class="btn ghost" id="again" style="color:var(--ink);box-shadow:inset 0 0 0 2px var(--line)">Jogar de novo</button>
   </section>
   <p class="foot">Gostou de viajar pelo mundo? <a href="${JOGO.site}" target="_blank" rel="noopener">Conheça as viagens da Via Singularis Travel</a></p>`;
   $('#again').onclick = () => { novoCaso(); telaBriefing(); };
+  const salvar = $('#rksave');
+  if (salvar) salvar.onclick = async () => {
+    const nome = $('#rknome').value.trim().replace(/\s+/g, ' ');
+    if (nome.length < 2) { toast('Digite seu nome para entrar no ranking.'); $('#rknome').focus(); return; }
+    store.set('mp-nome', nome);
+    salvar.disabled = true; salvar.textContent = 'Salvando…';
+    try { await rpc('jogo_registrar', { p_jogador: jogadorId(), p_nome: nome, p_nivel: NIVEL, p_pontos: total, p_origem: origem() }); telaRanking(NIVEL); }
+    catch { salvar.disabled = false; salvar.textContent = 'Salvar'; toast('Sem conexão com o ranking agora. Tente de novo.'); }
+  };
   const menu = document.createElement('button'); menu.className = 'btn ghost'; menu.textContent = 'Trocar nível'; menu.onclick = telaInicio; app.append(menu);
   $('#share').onclick = async () => {
     try { if (navigator.share) { await navigator.share({ title: 'Missão Passaporte', text: texto, url: JOGO.compartilhar }); return; } } catch (e) { if (e && e.name === 'AbortError') return; }
